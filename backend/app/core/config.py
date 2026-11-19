@@ -1,26 +1,41 @@
-import os
+
 from typing import List
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
 
 class Settings(BaseSettings):
+
     PROJECT_NAME: str = "Lax360 Billing"
-    MONGODB_URI: str = "mongodb+srv://jai890ai_db_user:jjp@lax360.oohnpcn.mongodb.net/lax360_billing1?retryWrites=true&w=majority&appName=lax360"
+
+    # Supply these through backend environment variables
+    MONGODB_URI: str
     DATABASE_NAME: str = "lax360_billing1"
-    JWT_SECRET: str = "lax360-super-secret-jwt-key-2026-production-ready-universal-billing"
+
+    # Never hardcode production secrets
+    JWT_SECRET: str
     JWT_ALGORITHM: str = "HS256"
+
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
+
     USE_IN_MEMORY_FALLBACK: bool = True
+
     BACKEND_CORS_ORIGINS: List[str] = [
+        "*",
         "http://localhost:5173",
         "http://localhost:4173",
         "http://localhost:3000",
+        "http://localhost:8000",
         "http://127.0.0.1:5173",
         "http://127.0.0.1:3000",
-        "https://textile-billing-chi.vercel.app"
+        "http://127.0.0.1:8000",
+        "https://common-billing.vercel.app"
     ]
 
-    class Config:
-        env_file = ".env"
-        extra = "ignore"
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore"
+    )
+
 
 settings = Settings()
