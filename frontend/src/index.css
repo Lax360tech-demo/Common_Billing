@@ -1,0 +1,277 @@
+
+@import "tailwindcss";
+
+/* =========================================
+   TAILWIND DARK MODE
+   Follow POS application theme, not device
+========================================= */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =========================================
+   THEME VARIABLES
+========================================= */
+
+:root {
+  color-scheme: light;
+
+  --theme-primary: #4f46e5;
+  --theme-primary-hover: #4338ca;
+  --theme-primary-light: #eef2ff;
+  --theme-primary-border: #c7d2fe;
+  --theme-primary-text: #ffffff;
+
+  --theme-bg-main: #f8fafc;
+  --theme-bg-card: #ffffff;
+  --theme-bg-sidebar: #0f172a;
+
+  --theme-sidebar-text: #cbd5e1;
+  --theme-sidebar-active: #4f46e5;
+  --theme-sidebar-border: #1e293b;
+
+  --theme-border: #e2e8f0;
+  --theme-text-main: #0f172a;
+  --theme-text-muted: #64748b;
+
+  --theme-accent: #f59e0b;
+}
+
+/* =========================================
+   BASE STYLES
+========================================= */
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+
+    font-family: -apple-system, BlinkMacSystemFont,
+      'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    background-color: var(--theme-bg-main);
+    color: var(--theme-text-main);
+
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+  }
+
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* =========================================
+   CONSISTENT THEME-AWARE INPUT STYLING
+========================================= */
+
+input,
+textarea,
+select {
+  color: var(--theme-text-main);
+  background-color: var(--theme-bg-card);
+  border-color: var(--theme-border);
+
+  font-family: inherit;
+  font-size: inherit;
+
+  color-scheme: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--theme-text-muted);
+  opacity: 0.85;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  color: var(--theme-text-main);
+  outline-color: var(--theme-primary);
+}
+
+select option {
+  color: var(--theme-text-main);
+  background-color: var(--theme-bg-card);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: var(--theme-bg-main);
+  color: var(--theme-text-muted);
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   BROWSER AUTOFILL CONSISTENCY
+========================================= */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: var(--theme-text-main);
+  caret-color: var(--theme-text-main);
+
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* =========================================
+   THEME DESIGN-TOKEN UTILITY CLASSES
+========================================= */
+
+.bg-theme-primary {
+  background-color: var(--theme-primary) !important;
+  color: var(--theme-primary-text) !important;
+}
+
+.bg-theme-primary-hover:hover {
+  background-color: var(--theme-primary-hover) !important;
+}
+
+.bg-theme-primary-light {
+  background-color: var(--theme-primary-light) !important;
+}
+
+.text-theme-primary {
+  color: var(--theme-primary) !important;
+}
+
+.border-theme-primary {
+  border-color: var(--theme-primary) !important;
+}
+
+.border-theme-default {
+  border-color: var(--theme-border) !important;
+}
+
+.bg-theme-main {
+  background-color: var(--theme-bg-main) !important;
+}
+
+.bg-theme-card {
+  background-color: var(--theme-bg-card) !important;
+}
+
+.bg-theme-sidebar {
+  background-color: var(--theme-bg-sidebar) !important;
+}
+
+.text-theme-main {
+  color: var(--theme-text-main) !important;
+}
+
+.text-theme-muted {
+  color: var(--theme-text-muted) !important;
+}
+
+/* =========================================
+   FOCUS RING
+========================================= */
+
+.focus-ring-theme:focus {
+  outline: none;
+
+  box-shadow:
+    0 0 0 2px var(--theme-bg-card),
+    0 0 0 4px var(--theme-primary) !important;
+}
+
+/* =========================================
+   CUSTOM SCROLLBARS
+========================================= */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--theme-border, #cbd5e1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-text-muted, #94a3b8);
+}
+
+/* =========================================
+   PRINT STYLES
+========================================= */
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #printable-invoice,
+  #printable-invoice * {
+    visibility: visible;
+  }
+
+  #printable-invoice {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background: white;
+    color: black;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  @page {
+    margin: 0.5cm;
+    size: auto;
+  }
+}
+
+@keyframes scannerSweep {
+  0% {
+    top: 15%;
+    opacity: 0.4;
+  }
+  50% {
+    top: 85%;
+    opacity: 1;
+  }
+  100% {
+    top: 15%;
+    opacity: 0.4;
+  }
+}
+
