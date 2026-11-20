@@ -1,0 +1,77 @@
+{
+  "name": "lax360-frontend",
+  "version": "1.0.1",
+  "description": "LAX360 Cross-Platform Desktop & Mobile Software Application",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "desktop": "electron .",
+    "electron:dev": "concurrently -k \"vite\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron:build": "npm run build && electron-builder --win",
+    "electron:build:dir": "npm run build && electron-builder --dir",
+    "electron:publish": "npm run build && electron-builder --win --publish always"
+  },
+  "dependencies": {
+    "@zxing/browser": "^0.2.1",
+    "@zxing/library": "^0.23.0",
+    "electron-updater": "^6.8.11",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
+    "qrcode": "^1.5.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native-web": "^0.19.10"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^9.1.2",
+    "electron": "^29.1.5",
+    "electron-builder": "^26.0.12",
+    "vite": "^5.1.6",
+    "wait-on": "^8.0.1"
+  },
+  "author": "LAX360 Technologies",
+  "build": {
+    "appId": "com.lax360.billing",
+    "productName": "LAX360 Billing",
+    "directories": {
+      "output": "release"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Lax360tech-demo",
+        "repo": "Common_Billing"
+      }
+    ],
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "LAX360 Billing",
+      "differentialPackage": false,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}

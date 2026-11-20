@@ -1,0 +1,51 @@
+name: Release LAX360 Desktop Application
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & Publish Windows Release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Determine Project Directory
+        id: dir
+        shell: bash
+        run: |
+          if [ -d "frontend" ]; then
+            echo "path=frontend" >> $GITHUB_OUTPUT
+          elif [ -d "LAX360_CROSS_PLATFORM/frontend" ]; then
+            echo "path=LAX360_CROSS_PLATFORM/frontend" >> $GITHUB_OUTPUT
+          else
+            echo "path=." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies
+        working-directory: ${{ steps.dir.outputs.path }}
+        run: npm install
+
+      - name: Build React production bundle
+        working-directory: ${{ steps.dir.outputs.path }}
+        run: npm run build
+
+      - name: Build & Publish Electron Release to GitHub
+        working-directory: ${{ steps.dir.outputs.path }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx electron-builder --win --publish always
