@@ -111,23 +111,7 @@ export const Login = () => {
           </p>
         </div>
 
-        {/* Demo Helper Banner */}
-        <div className="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 flex items-center justify-between text-xs">
-          <div>
-            <p className="font-extrabold text-indigo-900 dark:text-indigo-300">Default Demo Credentials:</p>
-            <p className="text-indigo-700 dark:text-indigo-400">admin@gmail.com • password: admin</p>
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              setIdentifier('admin@gmail.com');
-              setPassword('admin');
-            }}
-            className="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-[10px] font-bold shadow-xs hover:bg-indigo-700 cursor-pointer"
-          >
-            Auto Fill
-          </button>
-        </div>
+        
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
