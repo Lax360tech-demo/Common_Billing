@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useApp } from '../../context/AppContext';
 import api from '../../api/client';
 
-export const ProductModal = ({ isOpen, onClose, product, onSaved }) => {
+export const ProductModal = ({ isOpen, onClose, product, onSaved, categoriesList = [] }) => {
   const { categoryConfig } = useAuth();
   const { showToast } = useApp();
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -18,12 +18,12 @@ export const ProductModal = ({ isOpen, onClose, product, onSaved }) => {
     category: 'General',
     brand: '',
     description: '',
-    purchase_price: 0,
-    selling_price: 0,
-    mrp: 0,
+    purchase_price: '',
+    selling_price: '',
+    mrp: '',
     tax_rate: 18,
     unit: 'pcs',
-    stock: 0,
+    stock: '',
     min_stock_level: 5,
     hsn: '',
     attributes: {}
@@ -39,30 +39,31 @@ export const ProductModal = ({ isOpen, onClose, product, onSaved }) => {
         category: product.category || 'General',
         brand: product.brand || '',
         description: product.description || '',
-        purchase_price: product.purchase_price || 0,
-        selling_price: product.selling_price || 0,
-        mrp: product.mrp || product.selling_price || 0,
-        tax_rate: product.tax_rate || 0,
+        purchase_price: product.purchase_price !== undefined && product.purchase_price !== null ? String(product.purchase_price) : '',
+        selling_price: product.selling_price !== undefined && product.selling_price !== null ? String(product.selling_price) : '',
+        mrp: (product.mrp ?? product.selling_price) !== undefined ? String(product.mrp ?? product.selling_price) : '',
+        tax_rate: product.tax_rate ?? 0,
         unit: product.unit || categoryConfig?.defaultUnit || 'pcs',
-        stock: product.stock || 0,
+        stock: product.stock !== undefined && product.stock !== null ? String(product.stock) : '',
         min_stock_level: product.min_stock_level || 5,
         hsn: product.hsn || '',
         attributes: product.attributes || {}
       });
     } else {
+      const defaultCat = categoriesList?.find(c => c && c !== 'All') || categoryConfig?.suggestedCategories?.[0] || 'General';
       setFormData({
         name: '',
         code: '',
         barcode: '',
-        category: categoryConfig?.suggestedCategories?.[0] || 'General',
+        category: defaultCat,
         brand: '',
         description: '',
-        purchase_price: 0,
-        selling_price: 0,
-        mrp: 0,
+        purchase_price: '',
+        selling_price: '',
+        mrp: '',
         tax_rate: 18,
         unit: categoryConfig?.defaultUnit || 'pcs',
-        stock: 0,
+        stock: '',
         min_stock_level: 5,
         hsn: '',
         attributes: {}
@@ -70,15 +71,46 @@ export const ProductModal = ({ isOpen, onClose, product, onSaved }) => {
     }
   }, [product, categoryConfig, isOpen]);
 
+  const handleNumberChange = (field, val) => {
+    if (val === '' || val === null || val === undefined) {
+      setFormData((prev) => ({ ...prev, [field]: '' }));
+      return;
+    }
+    let cleanVal = String(val);
+    // Remove leading zeros when followed by other digits (e.g. '05' -> '5', '0100' -> '100')
+    if (/^0[0-9]/.test(cleanVal)) {
+      cleanVal = cleanVal.replace(/^0+/, '') || '0';
+    }
+    setFormData((prev) => ({ ...prev, [field]: cleanVal }));
+  };
+
+  const availableCategories = React.useMemo(() => {
+    const set = new Set();
+    (categoryConfig?.suggestedCategories || []).forEach((c) => c && set.add(c.trim()));
+    (categoriesList || []).forEach((c) => c && c !== 'All' && set.add(c.trim()));
+    return Array.from(set).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+  }, [categoryConfig, categoriesList]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
+      const payload = {
+        ...formData,
+        category: formData.category?.trim() || 'General',
+        purchase_price: parseFloat(formData.purchase_price) || 0,
+        selling_price: parseFloat(formData.selling_price) || 0,
+        mrp: parseFloat(formData.mrp) || parseFloat(formData.selling_price) || 0,
+        tax_rate: parseFloat(formData.tax_rate) || 0,
+        stock: parseFloat(formData.stock) || 0,
+        min_stock_level: parseFloat(formData.min_stock_level) || 0
+      };
+
       if (product) {
-        await api.put(`/products/${product.id}`, formData);
+        await api.put(`/products/${product.id}`, payload);
         showToast('Product updated successfully', 'success');
       } else {
-        await api.post('/products', formData);
+        await api.post('/products', payload);
         showToast('Product added successfully', 'success');
       }
       onSaved?.();
@@ -126,7 +158,7 @@ export const ProductModal = ({ isOpen, onClose, product, onSaved }) => {
               className="w-full mt-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold"
             />
             <datalist id="suggested-cats">
-              {(categoryConfig?.suggestedCategories || []).map((cat) => (
+              {availableCategories.map((cat) => (
                 <option key={cat} value={cat} />
               ))}
             </datalist>
@@ -197,8 +229,10 @@ export const ProductModal = ({ isOpen, onClose, product, onSaved }) => {
             <input
               type="number"
               step="any"
+              min="0"
+              placeholder="0"
               value={formData.purchase_price}
-              onChange={(e) => setFormData({ ...formData, purchase_price: parseFloat(e.target.value) || 0 })}
+              onChange={(e) => handleNumberChange('purchase_price', e.target.value)}
               className="w-full mt-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold"
             />
           </div>
@@ -208,9 +242,11 @@ export const ProductModal = ({ isOpen, onClose, product, onSaved }) => {
             <input
               type="number"
               step="any"
+              min="0"
               required
+              placeholder="0"
               value={formData.selling_price}
-              onChange={(e) => setFormData({ ...formData, selling_price: parseFloat(e.target.value) || 0 })}
+              onChange={(e) => handleNumberChange('selling_price', e.target.value)}
               className="w-full mt-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-indigo-600 dark:text-indigo-400"
             />
           </div>
@@ -231,12 +267,14 @@ export const ProductModal = ({ isOpen, onClose, product, onSaved }) => {
           </div>
 
           <div>
-            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Initial Stock</label>
+            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Initial Stock / Quantity</label>
             <input
               type="number"
               step="any"
+              min="0"
+              placeholder="0"
               value={formData.stock}
-              onChange={(e) => setFormData({ ...formData, stock: parseFloat(e.target.value) || 0 })}
+              onChange={(e) => handleNumberChange('stock', e.target.value)}
               className="w-full mt-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold"
             />
           </div>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Search, Edit2, SlidersHorizontal, Trash2, Package } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Plus, Search, Edit2, SlidersHorizontal, Trash2, Package, ArrowUpDown } from 'lucide-react';
 import { ProductModal } from '../components/products/ProductModal';
 import { StockAdjustmentModal } from '../components/products/StockAdjustmentModal';
 import { useAuth } from '../context/AuthContext';
@@ -12,9 +12,12 @@ export const Products = () => {
   const { showToast } = useApp();
 
   const [products, setProducts] = useState([]);
+  const [dbCategories, setDbCategories] = useState([]);
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [loading, setLoading] = useState(true);
+  const [sortField, setSortField] = useState('category'); // Sorted based on categories by default
+  const [sortOrder, setSortOrder] = useState('asc'); // 'asc' or 'desc'
 
   // Modals
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
@@ -22,15 +25,21 @@ export const Products = () => {
   const [isAdjustmentOpen, setIsAdjustmentOpen] = useState(false);
   const [adjustingProduct, setAdjustingProduct] = useState(null);
 
-
-  useEffect(() => {
-    loadProducts();
-  }, [selectedCategory]);
+  const loadCategories = async () => {
+    try {
+      const res = await api.get('/products/categories');
+      if (Array.isArray(res.data)) {
+        setDbCategories(res.data);
+      }
+    } catch (err) {
+      console.warn('Products categories load error:', err);
+    }
+  };
 
   const loadProducts = async () => {
     setLoading(true);
     try {
-      const q = selectedCategory !== 'All' ? `?category=${selectedCategory}` : '';
+      const q = selectedCategory !== 'All' ? `?category=${encodeURIComponent(selectedCategory)}` : '';
       const res = await api.get(`/products${q}`);
       setProducts(res.data.items || []);
     } catch (err) {
@@ -40,27 +49,79 @@ export const Products = () => {
     }
   };
 
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  useEffect(() => {
+    loadProducts();
+  }, [selectedCategory]);
+
+  const handleProductSaved = () => {
+    loadProducts();
+    loadCategories();
+  };
+
   const handleDelete = async (prodId, prodName) => {
     if (!window.confirm(`Are you sure you want to delete ${prodName}?`)) return;
     try {
       await api.delete(`/products/${prodId}`);
       showToast('Product deleted successfully', 'success');
       loadProducts();
+      loadCategories();
     } catch (err) {
       showToast(err.response?.data?.detail || 'Failed to delete product', 'error');
     }
   };
 
-  const filtered = products.filter((p) => {
-    if (!search) return true;
-    const q = search.toLowerCase();
-    return (
-      p.name?.toLowerCase().includes(q) ||
-      p.code?.toLowerCase().includes(q) ||
-      p.barcode?.toLowerCase().includes(q) ||
-      p.brand?.toLowerCase().includes(q)
-    );
-  });
+  // Dynamically aggregate categories list from configuration, DB distinct categories, and newly input products
+  const allCategories = useMemo(() => {
+    const set = new Set();
+    (categoryConfig?.suggestedCategories || []).forEach((c) => {
+      if (c && typeof c === 'string' && c.trim()) set.add(c.trim());
+    });
+    dbCategories.forEach((c) => {
+      if (c && typeof c === 'string' && c.trim()) set.add(c.trim());
+    });
+    products.forEach((p) => {
+      if (p.category && typeof p.category === 'string' && p.category.trim()) set.add(p.category.trim());
+    });
+    return Array.from(set).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+  }, [categoryConfig, dbCategories, products]);
+
+  // Sort and filter products: defaults to sorting based on categories
+  const sortedAndFiltered = useMemo(() => {
+    let list = products.filter((p) => {
+      if (!search) return true;
+      const q = search.toLowerCase();
+      return (
+        p.name?.toLowerCase().includes(q) ||
+        p.code?.toLowerCase().includes(q) ||
+        p.barcode?.toLowerCase().includes(q) ||
+        p.brand?.toLowerCase().includes(q) ||
+        p.category?.toLowerCase().includes(q)
+      );
+    });
+
+    return list.sort((a, b) => {
+      if (sortField === 'category') {
+        const catA = (a.category || '').toLowerCase();
+        const catB = (b.category || '').toLowerCase();
+        const comp = catA.localeCompare(catB);
+        if (comp !== 0) {
+          return sortOrder === 'asc' ? comp : -comp;
+        }
+        return (a.name || '').localeCompare(b.name || '');
+      } else if (sortField === 'name') {
+        const comp = (a.name || '').localeCompare(b.name || '');
+        return sortOrder === 'asc' ? comp : -comp;
+      } else if (sortField === 'stock') {
+        const diff = (Number(a.stock) || 0) - (Number(b.stock) || 0);
+        return sortOrder === 'asc' ? diff : -diff;
+      }
+      return 0;
+    });
+  }, [products, search, sortField, sortOrder]);
 
   return (
     <div className="space-y-6">
@@ -106,10 +167,10 @@ export const Products = () => {
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full sm:w-48 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200"
+            className="w-full sm:w-56 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 cursor-pointer focus:outline-indigo-600"
           >
-            <option value="All">All Categories</option>
-            {(categoryConfig?.suggestedCategories || []).map((c) => (
+            <option value="All">All Categories ({allCategories.length})</option>
+            {allCategories.map((c) => (
               <option key={c} value={c}>{c}</option>
             ))}
           </select>
@@ -124,7 +185,25 @@ export const Products = () => {
               <tr>
                 <th className="p-4">SKU / Code</th>
                 <th className="p-4">Product Details</th>
-                <th className="p-4">Category</th>
+                <th
+                  className="p-4 cursor-pointer select-none hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+                  onClick={() => {
+                    if (sortField === 'category') {
+                      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+                    } else {
+                      setSortField('category');
+                      setSortOrder('asc');
+                    }
+                  }}
+                  title="Click to sort by Category"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span>Category</span>
+                    <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-black">
+                      {sortField === 'category' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕'}
+                    </span>
+                  </div>
+                </th>
                 <th className="p-4 text-center">Unit</th>
                 <th className="p-4 text-right">Cost Price</th>
                 <th className="p-4 text-right">Selling Price</th>
@@ -134,14 +213,14 @@ export const Products = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {filtered.length === 0 ? (
+              {sortedAndFiltered.length === 0 ? (
                 <tr>
                   <td colSpan="9" className="p-12 text-center text-slate-400">
-                    No products found. Click "Add Product" to create your first item.
+                    {loading ? 'Loading products...' : 'No products found. Click "Add Product" to create your first item.'}
                   </td>
                 </tr>
               ) : (
-                filtered.map((prod) => {
+                sortedAndFiltered.map((prod) => {
                   const isOutOfStock = Number(prod.stock) <= 0;
                   const isLowStock = Number(prod.stock) <= Number(prod.min_stock_level || 5);
                   return (
@@ -153,8 +232,10 @@ export const Products = () => {
                         <p className="font-bold text-slate-900 dark:text-white line-clamp-1">{prod.name}</p>
                         {prod.brand && <p className="text-[11px] text-slate-400">Brand: {prod.brand}</p>}
                       </td>
-                      <td className="p-4 text-slate-600 dark:text-slate-300 font-medium">
-                        {prod.category}
+                      <td className="p-4">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/60 dark:border-slate-700/60">
+                          {prod.category || 'Uncategorized'}
+                        </span>
                       </td>
                       <td className="p-4 text-center font-bold text-slate-700 dark:text-slate-200 uppercase">
                         {prod.unit || 'pcs'}
@@ -229,13 +310,14 @@ export const Products = () => {
         isOpen={isProductModalOpen}
         onClose={() => setIsProductModalOpen(false)}
         product={selectedProduct}
-        onSaved={loadProducts}
+        onSaved={handleProductSaved}
+        categoriesList={allCategories}
       />
       <StockAdjustmentModal
         isOpen={isAdjustmentOpen}
         onClose={() => setIsAdjustmentOpen(false)}
         product={adjustingProduct}
-        onAdjusted={loadProducts}
+        onAdjusted={handleProductSaved}
       />
     </div>
   );

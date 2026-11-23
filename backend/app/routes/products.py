@@ -13,8 +13,10 @@ def list_products(
     search: Optional[str] = None,
     category: Optional[str] = None,
     low_stock: Optional[bool] = None,
+    sort_by: Optional[str] = Query("category", description="Field to sort by (category, name, created_at, etc.)"),
+    sort_order: int = Query(1, description="1 for ascending, -1 for descending"),
     page: int = Query(1, ge=1),
-    limit: int = Query(100, ge=1, le=500),
+    limit: int = Query(200, ge=1, le=500),
     current_user: dict = Depends(get_current_user)
 ):
     db = get_database()
@@ -36,7 +38,19 @@ def list_products(
 
     total = db.products.count_documents(query)
     skip = (page - 1) * limit
-    cursor = db.products.find(query).sort("created_at", -1).skip(skip).limit(limit)
+
+    if sort_by == "category":
+        sort_fields = [("category", sort_order), ("name", 1)]
+    elif sort_by == "name":
+        sort_fields = [("name", sort_order)]
+    elif sort_by == "created_at":
+        sort_fields = [("created_at", sort_order)]
+    elif sort_by:
+        sort_fields = [(sort_by, sort_order)]
+    else:
+        sort_fields = [("category", 1), ("name", 1)]
+
+    cursor = db.products.find(query).sort(sort_fields).skip(skip).limit(limit)
 
     items = list(cursor)
     for p in items:
@@ -46,6 +60,14 @@ def list_products(
         items = [p for p in items if float(p.get("stock", 0.0)) <= float(p.get("min_stock_level", 5.0))]
 
     return {"items": items, "total": total, "page": page, "limit": limit}
+
+@router.get("/categories")
+def get_categories(current_user: dict = Depends(get_current_user)):
+    db = get_database()
+    business_id = current_user["business_id"]
+    categories = db.products.distinct("category", {"business_id": business_id})
+    cleaned = [c.strip() for c in categories if c and isinstance(c, str) and c.strip()]
+    return sorted(list(set(cleaned)), key=lambda s: s.lower())
 
 @router.get("/barcode/{barcode}")
 def get_by_barcode(barcode: str, current_user: dict = Depends(get_current_user)):
