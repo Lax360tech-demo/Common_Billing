@@ -15,6 +15,19 @@ class DatabaseManager:
     def connect(self):
         if self.sync_db is not None:
             return
+
+        mongo_uri = settings.MONGODB_URI.strip()
+        if (
+            settings.USE_IN_MEMORY_FALLBACK
+            and (not mongo_uri or mongo_uri == "your-mongodb-connection-string")
+        ):
+            logger.warning("MongoDB URI is not configured. Using the in-memory database.")
+            self.sync_client = mongomock.MongoClient()
+            self.sync_db = self.sync_client[settings.DATABASE_NAME]
+            self.is_mock = True
+            self.create_indexes()
+            return
+
         try:
             logger.info("Connecting to configured MongoDB Atlas...")
             client = MongoClient(
