@@ -1,0 +1,14 @@
+[
+  {
+    "_id": "6afe8823f89f056877145cb8",
+    "id": "6afe8823f89f056877145cb8",
+    "email": "admin@gmail.com",
+    "name": "Admin Store Manager",
+    "phone": "9876543210",
+    "role": "owner",
+    "password_hash": "admin",
+    "store_id": "6afe8821f89f056877145cb7",
+    "store_name": "Lady Avenue Showroom",
+    "created_at": "2026-11-19T05:52:09.286466+00:00"
+  }
+]

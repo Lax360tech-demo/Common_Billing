@@ -1,0 +1,1742 @@
+[
+  {
+    "id": "prod-01",
+    "name": "Kanchipuram Pure Silk Wedding Saree",
+    "category": "Sarees",
+    "fabric": "Kanchipuram Silk",
+    "brand": "ChennaSilks Heritage",
+    "hsn": "5007",
+    "mrp": 18500,
+    "price": 15499,
+    "gstRate": 5,
+    "description": "Traditional zari rich pallu saree with authentic temple border design.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-01-1",
+        "sku": "KPS-MRN-FS",
+        "barcode": "890100100101",
+        "size": "Free Size",
+        "color": "Maroon Gold",
+        "hex": "#800000",
+        "price": 15499,
+        "mrp": 18500
+      },
+      {
+        "id": "v-01-2",
+        "sku": "KPS-PEA-FS",
+        "barcode": "890100100102",
+        "size": "Free Size",
+        "color": "Peacock Blue",
+        "hex": "#005f73",
+        "price": 15499,
+        "mrp": 18500
+      },
+      {
+        "id": "v-01-3",
+        "sku": "KPS-EMR-FS",
+        "barcode": "890100100103",
+        "size": "Free Size",
+        "color": "Emerald Green",
+        "hex": "#0a9396",
+        "price": 15999,
+        "mrp": 19000
+      }
+    ]
+  },
+  {
+    "id": "prod-02",
+    "name": "Banarasi Katan Silk Saree",
+    "category": "Sarees",
+    "fabric": "Banarasi Silk",
+    "brand": "Royal Weaves",
+    "hsn": "5007",
+    "mrp": 12999,
+    "price": 10499,
+    "gstRate": 5,
+    "description": "Handwoven pure Katan silk saree with antique floral jaal work.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-02-1",
+        "sku": "BKS-RED-FS",
+        "barcode": "890100100201",
+        "size": "Free Size",
+        "color": "Rani Pink",
+        "hex": "#e91e63",
+        "price": 10499,
+        "mrp": 12999
+      },
+      {
+        "id": "v-02-2",
+        "sku": "BKS-YEL-FS",
+        "barcode": "890100100202",
+        "size": "Free Size",
+        "color": "Mustard Yellow",
+        "hex": "#e9c46a",
+        "price": 10499,
+        "mrp": 12999
+      },
+      {
+        "id": "v-02-3",
+        "sku": "BKS-ROY-FS",
+        "barcode": "890100100203",
+        "size": "Free Size",
+        "color": "Royal Purple",
+        "hex": "#4a154b",
+        "price": 10999,
+        "mrp": 13500
+      }
+    ]
+  },
+  {
+    "id": "prod-03",
+    "name": "Soft Tussar Silk Floral Print Saree",
+    "category": "Sarees",
+    "fabric": "Chanderi Silk",
+    "brand": "Kala Sanskruti",
+    "hsn": "5007",
+    "mrp": 4999,
+    "price": 3699,
+    "gstRate": 5,
+    "description": "Lightweight contemporary tussar silk saree suitable for day festive wear.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-03-1",
+        "sku": "TSS-BEI-FS",
+        "barcode": "890100100301",
+        "size": "Free Size",
+        "color": "Beige Cream",
+        "hex": "#f5ebe0",
+        "price": 3699,
+        "mrp": 4999
+      },
+      {
+        "id": "v-03-2",
+        "sku": "TSS-MNT-FS",
+        "barcode": "890100100302",
+        "size": "Free Size",
+        "color": "Pista Green",
+        "hex": "#94d2bd",
+        "price": 3699,
+        "mrp": 4999
+      }
+    ]
+  },
+  {
+    "id": "prod-04",
+    "name": "Coimbatore Pure Cotton Temple Saree",
+    "category": "Sarees",
+    "fabric": "100% Combed Cotton",
+    "brand": "Kovai Weaves",
+    "hsn": "5208",
+    "mrp": 2499,
+    "price": 1850,
+    "gstRate": 5,
+    "description": "100s count soft Coimbatore cotton saree with contrast korvai border.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-04-1",
+        "sku": "CBC-BLK-FS",
+        "barcode": "890100100401",
+        "size": "Free Size",
+        "color": "Black & Red",
+        "hex": "#111111",
+        "price": 1850,
+        "mrp": 2499
+      },
+      {
+        "id": "v-04-2",
+        "sku": "CBC-IND-FS",
+        "barcode": "890100100402",
+        "size": "Free Size",
+        "color": "Indigo Blue",
+        "hex": "#1d3557",
+        "price": 1850,
+        "mrp": 2499
+      },
+      {
+        "id": "v-04-3",
+        "sku": "CBC-GRN-FS",
+        "barcode": "890100100403",
+        "size": "Free Size",
+        "color": "Bottle Green",
+        "hex": "#2d6a4f",
+        "price": 1850,
+        "mrp": 2499
+      }
+    ]
+  },
+  {
+    "id": "prod-05",
+    "name": "Chettinad Traditional Checks Cotton Saree",
+    "category": "Sarees",
+    "fabric": "100% Combed Cotton",
+    "brand": "Karaikudi Heritage",
+    "hsn": "5208",
+    "mrp": 1999,
+    "price": 1450,
+    "gstRate": 5,
+    "description": "Authentic 80s count Chettinad kandaangi checks saree.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-05-1",
+        "sku": "CNT-YEL-FS",
+        "barcode": "890100100501",
+        "size": "Free Size",
+        "color": "Yellow Maroon",
+        "hex": "#d4a373",
+        "price": 1450,
+        "mrp": 1999
+      },
+      {
+        "id": "v-05-2",
+        "sku": "CNT-ORP-FS",
+        "barcode": "890100100502",
+        "size": "Free Size",
+        "color": "Orange Brown",
+        "hex": "#bb3e03",
+        "price": 1450,
+        "mrp": 1999
+      }
+    ]
+  },
+  {
+    "id": "prod-06",
+    "name": "Men Pure Linen Slim Fit Shirt",
+    "category": "Men's Casual",
+    "fabric": "Linen",
+    "brand": "Linen Club Edition",
+    "hsn": "6205",
+    "mrp": 2999,
+    "price": 2199,
+    "gstRate": 5,
+    "description": "European pure flax linen long sleeve casual and semi-formal shirt.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-06-1",
+        "sku": "LSH-WHT-38",
+        "barcode": "890100100601",
+        "size": "38 (S)",
+        "color": "Optical White",
+        "hex": "#ffffff",
+        "price": 2199,
+        "mrp": 2999
+      },
+      {
+        "id": "v-06-2",
+        "sku": "LSH-WHT-40",
+        "barcode": "890100100602",
+        "size": "40 (M)",
+        "color": "Optical White",
+        "hex": "#ffffff",
+        "price": 2199,
+        "mrp": 2999
+      },
+      {
+        "id": "v-06-3",
+        "sku": "LSH-WHT-42",
+        "barcode": "890100100603",
+        "size": "42 (L)",
+        "color": "Optical White",
+        "hex": "#ffffff",
+        "price": 2199,
+        "mrp": 2999
+      },
+      {
+        "id": "v-06-4",
+        "sku": "LSH-SKY-40",
+        "barcode": "890100100604",
+        "size": "40 (M)",
+        "color": "Sky Blue",
+        "hex": "#90e0ef",
+        "price": 2199,
+        "mrp": 2999
+      },
+      {
+        "id": "v-06-5",
+        "sku": "LSH-SKY-42",
+        "barcode": "890100100605",
+        "size": "42 (L)",
+        "color": "Sky Blue",
+        "hex": "#90e0ef",
+        "price": 2199,
+        "mrp": 2999
+      },
+      {
+        "id": "v-06-6",
+        "sku": "LSH-OLV-40",
+        "barcode": "890100100606",
+        "size": "40 (M)",
+        "color": "Sage Green",
+        "hex": "#606c38",
+        "price": 2199,
+        "mrp": 2999
+      }
+    ]
+  },
+  {
+    "id": "prod-07",
+    "name": "Men's Formal Egyptian Cotton Shirt",
+    "category": "Men's Casual",
+    "fabric": "100% Combed Cotton",
+    "brand": "Vanguard Tailors",
+    "hsn": "6205",
+    "mrp": 2199,
+    "price": 1599,
+    "gstRate": 5,
+    "description": "Super fine 2-ply Egyptian cotton crisp formal workwear shirt.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-07-1",
+        "sku": "ECS-LBL-39",
+        "barcode": "890100100701",
+        "size": "39 (S)",
+        "color": "Light Blue",
+        "hex": "#caf0f8",
+        "price": 1599,
+        "mrp": 2199
+      },
+      {
+        "id": "v-07-2",
+        "sku": "ECS-LBL-40",
+        "barcode": "890100100702",
+        "size": "40 (M)",
+        "color": "Light Blue",
+        "hex": "#caf0f8",
+        "price": 1599,
+        "mrp": 2199
+      },
+      {
+        "id": "v-07-3",
+        "sku": "ECS-LBL-42",
+        "barcode": "890100100703",
+        "size": "42 (L)",
+        "color": "Light Blue",
+        "hex": "#caf0f8",
+        "price": 1599,
+        "mrp": 2199
+      },
+      {
+        "id": "v-07-4",
+        "sku": "ECS-PNK-40",
+        "barcode": "890100100704",
+        "size": "40 (M)",
+        "color": "Powder Pink",
+        "hex": "#ffe5ec",
+        "price": 1599,
+        "mrp": 2199
+      }
+    ]
+  },
+  {
+    "id": "prod-08",
+    "name": "Pure Silk Jari Dhoti & Angavastram Set",
+    "category": "Dhotis & Veshtis",
+    "fabric": "Pure Mulberry Silk",
+    "brand": "Ramraj Heritage",
+    "hsn": "5007",
+    "mrp": 9999,
+    "price": 7899,
+    "gstRate": 5,
+    "description": "Mayilkann border pure silk double dhoti (4+2 meters) with matching towel.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-08-1",
+        "sku": "SDK-GLD-FS",
+        "barcode": "890100100801",
+        "size": "9x5 Yards",
+        "color": "Cream Gold Zari",
+        "hex": "#faedcd",
+        "price": 7899,
+        "mrp": 9999
+      },
+      {
+        "id": "v-08-2",
+        "sku": "SDK-COP-FS",
+        "barcode": "890100100802",
+        "size": "9x5 Yards",
+        "color": "Ivory Copper Zari",
+        "hex": "#e9d8a6",
+        "price": 8199,
+        "mrp": 10499
+      }
+    ]
+  },
+  {
+    "id": "prod-09",
+    "name": "Traditional Gold Zari Panchakacham Dhoti",
+    "category": "Dhotis & Veshtis",
+    "fabric": "100% Combed Cotton",
+    "brand": "MCR Traditional",
+    "hsn": "5208",
+    "mrp": 1899,
+    "price": 1399,
+    "gstRate": 5,
+    "description": "100% Cotton 1 inch gold zari panchakacham double veshti.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-09-1",
+        "sku": "PNC-GLD-8Y",
+        "barcode": "890100100901",
+        "size": "8 Muzham (3.6m)",
+        "color": "Bleached White",
+        "hex": "#ffffff",
+        "price": 1399,
+        "mrp": 1899
+      },
+      {
+        "id": "v-09-2",
+        "sku": "PNC-GLD-9Y",
+        "barcode": "890100100902",
+        "size": "9 Muzham (4.0m)",
+        "color": "Bleached White",
+        "hex": "#ffffff",
+        "price": 1499,
+        "mrp": 1999
+      }
+    ]
+  },
+  {
+    "id": "prod-10",
+    "name": "Cotton Velcro Pocket Dhoti with Belt",
+    "category": "Dhotis & Veshtis",
+    "fabric": "100% Combed Cotton",
+    "brand": "Ramraj Cotton",
+    "hsn": "5208",
+    "mrp": 899,
+    "price": 699,
+    "gstRate": 5,
+    "description": "Easy wear stick-on velcro dhoti with mobile pocket and elastic waistband.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-10-1",
+        "sku": "VCD-WHT-32",
+        "barcode": "890100101001",
+        "size": "Waist 32-34",
+        "color": "White Gold Border",
+        "hex": "#fdf0d5",
+        "price": 699,
+        "mrp": 899
+      },
+      {
+        "id": "v-10-2",
+        "sku": "VCD-WHT-36",
+        "barcode": "890100101002",
+        "size": "Waist 36-38",
+        "color": "White Gold Border",
+        "hex": "#fdf0d5",
+        "price": 699,
+        "mrp": 899
+      },
+      {
+        "id": "v-10-3",
+        "sku": "VCD-WHT-40",
+        "barcode": "890100101003",
+        "size": "Waist 40-42",
+        "color": "White Gold Border",
+        "hex": "#fdf0d5",
+        "price": 749,
+        "mrp": 949
+      }
+    ]
+  },
+  {
+    "id": "prod-11",
+    "name": "Men's Raw Silk Embroidered Kurta Pajama Set",
+    "category": "Men's Ethnic",
+    "fabric": "Pure Mulberry Silk",
+    "brand": "Manyavar Style",
+    "hsn": "6203",
+    "mrp": 6999,
+    "price": 5299,
+    "gstRate": 12,
+    "description": "Mandarin collar raw silk kurta with resham threadwork and churidar.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-11-1",
+        "sku": "MKP-MRN-38",
+        "barcode": "890100101101",
+        "size": "38 (M)",
+        "color": "Deep Maroon",
+        "hex": "#581845",
+        "price": 5299,
+        "mrp": 6999
+      },
+      {
+        "id": "v-11-2",
+        "sku": "MKP-MRN-40",
+        "barcode": "890100101102",
+        "size": "40 (L)",
+        "color": "Deep Maroon",
+        "hex": "#581845",
+        "price": 5299,
+        "mrp": 6999
+      },
+      {
+        "id": "v-11-3",
+        "sku": "MKP-NVY-40",
+        "barcode": "890100101103",
+        "size": "40 (L)",
+        "color": "Navy Blue",
+        "hex": "#001d3d",
+        "price": 5299,
+        "mrp": 6999
+      },
+      {
+        "id": "v-11-4",
+        "sku": "MKP-NVY-42",
+        "barcode": "890100101104",
+        "size": "42 (XL)",
+        "color": "Navy Blue",
+        "hex": "#001d3d",
+        "price": 5299,
+        "mrp": 6999
+      }
+    ]
+  },
+  {
+    "id": "prod-12",
+    "name": "Khadi Short Kurta for Men",
+    "category": "Men's Ethnic",
+    "fabric": "Khadi Cotton",
+    "brand": "Swadeshi Handlooms",
+    "hsn": "6203",
+    "mrp": 1499,
+    "price": 999,
+    "gstRate": 5,
+    "description": "Breathable authentic spun khadi cotton everyday short kurta.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-12-1",
+        "sku": "KHD-MST-M",
+        "barcode": "890100101201",
+        "size": "M (38)",
+        "color": "Mustard Ochre",
+        "hex": "#e76f51",
+        "price": 999,
+        "mrp": 1499
+      },
+      {
+        "id": "v-12-2",
+        "sku": "KHD-MST-L",
+        "barcode": "890100101202",
+        "size": "L (40)",
+        "color": "Mustard Ochre",
+        "hex": "#e76f51",
+        "price": 999,
+        "mrp": 1499
+      },
+      {
+        "id": "v-12-3",
+        "sku": "KHD-IND-L",
+        "barcode": "890100101203",
+        "size": "L (40)",
+        "color": "Indigo Handblock",
+        "hex": "#264653",
+        "price": 999,
+        "mrp": 1499
+      },
+      {
+        "id": "v-12-4",
+        "sku": "KHD-IND-XL",
+        "barcode": "890100101204",
+        "size": "XL (42)",
+        "color": "Indigo Handblock",
+        "hex": "#264653",
+        "price": 999,
+        "mrp": 1499
+      }
+    ]
+  },
+  {
+    "id": "prod-13",
+    "name": "Women's Anarkali Embroidered Kurta Set",
+    "category": "Salwar Sets",
+    "fabric": "Chanderi Silk",
+    "brand": "Biba Collection",
+    "hsn": "6204",
+    "mrp": 4599,
+    "price": 3499,
+    "gstRate": 12,
+    "description": "Flared 3-piece Chanderi silk anarkali kurta, pants and organza dupatta.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-13-1",
+        "sku": "ANK-TL-S",
+        "barcode": "890100101301",
+        "size": "S (36)",
+        "color": "Teal Blue",
+        "hex": "#005f73",
+        "price": 3499,
+        "mrp": 4599
+      },
+      {
+        "id": "v-13-2",
+        "sku": "ANK-TL-M",
+        "barcode": "890100101302",
+        "size": "M (38)",
+        "color": "Teal Blue",
+        "hex": "#005f73",
+        "price": 3499,
+        "mrp": 4599
+      },
+      {
+        "id": "v-13-3",
+        "sku": "ANK-TL-L",
+        "barcode": "890100101303",
+        "size": "L (40)",
+        "color": "Teal Blue",
+        "hex": "#005f73",
+        "price": 3499,
+        "mrp": 4599
+      },
+      {
+        "id": "v-13-4",
+        "sku": "ANK-RS-M",
+        "barcode": "890100101304",
+        "size": "M (38)",
+        "color": "Dusty Rose",
+        "hex": "#e07a5f",
+        "price": 3499,
+        "mrp": 4599
+      }
+    ]
+  },
+  {
+    "id": "prod-14",
+    "name": "Straight Cut Cotton Daily Kurti",
+    "category": "Women's Kurtis",
+    "fabric": "100% Combed Cotton",
+    "brand": "W Trends",
+    "hsn": "6204",
+    "mrp": 1299,
+    "price": 799,
+    "gstRate": 5,
+    "description": "Kalamkari handblock printed comfortable office wear straight kurti.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-14-1",
+        "sku": "KLM-RED-M",
+        "barcode": "890100101401",
+        "size": "M (38)",
+        "color": "Rust Maroon",
+        "hex": "#9d0208",
+        "price": 799,
+        "mrp": 1299
+      },
+      {
+        "id": "v-14-2",
+        "sku": "KLM-RED-L",
+        "barcode": "890100101402",
+        "size": "L (40)",
+        "color": "Rust Maroon",
+        "hex": "#9d0208",
+        "price": 799,
+        "mrp": 1299
+      },
+      {
+        "id": "v-14-3",
+        "sku": "KLM-RED-XL",
+        "barcode": "890100101403",
+        "size": "XL (42)",
+        "color": "Rust Maroon",
+        "hex": "#9d0208",
+        "price": 799,
+        "mrp": 1299
+      },
+      {
+        "id": "v-14-4",
+        "sku": "KLM-IND-M",
+        "barcode": "890100101404",
+        "size": "M (38)",
+        "color": "Indigo Blue",
+        "hex": "#14213d",
+        "price": 799,
+        "mrp": 1299
+      },
+      {
+        "id": "v-14-5",
+        "sku": "KLM-IND-L",
+        "barcode": "890100101405",
+        "size": "L (40)",
+        "color": "Indigo Blue",
+        "hex": "#14213d",
+        "price": 799,
+        "mrp": 1299
+      }
+    ]
+  },
+  {
+    "id": "prod-15",
+    "name": "Chanderi Unstitched Salwar Suit Material",
+    "category": "Fabrics & Matching",
+    "fabric": "Chanderi Silk",
+    "brand": "Surat Silks",
+    "hsn": "5007",
+    "mrp": 2799,
+    "price": 1999,
+    "gstRate": 5,
+    "description": "Top 2.5m Chanderi, Bottom 2.5m Santoon, Dupatta 2.25m Banarasi zari.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-15-1",
+        "sku": "USM-PCH-FS",
+        "barcode": "890100101501",
+        "size": "2.5m Set",
+        "color": "Peach Gold",
+        "hex": "#ffb5a7",
+        "price": 1999,
+        "mrp": 2799
+      },
+      {
+        "id": "v-15-2",
+        "sku": "USM-LAV-FS",
+        "barcode": "890100101502",
+        "size": "2.5m Set",
+        "color": "Lavender Mist",
+        "hex": "#cdb4db",
+        "price": 1999,
+        "mrp": 2799
+      },
+      {
+        "id": "v-15-3",
+        "sku": "USM-MIN-FS",
+        "barcode": "890100101503",
+        "size": "2.5m Set",
+        "color": "Mint Frost",
+        "hex": "#b7e4c7",
+        "price": 1999,
+        "mrp": 2799
+      }
+    ]
+  },
+  {
+    "id": "prod-16",
+    "name": "Pure Cotton Sanganeri Running Fabric (Per Meter)",
+    "category": "Fabrics & Matching",
+    "fabric": "100% Combed Cotton",
+    "brand": "Jaipur Crafts",
+    "hsn": "5208",
+    "mrp": 299,
+    "price": 220,
+    "gstRate": 5,
+    "description": "60s count pure cotton fabric for custom kurtas, blouses, and dresses.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-16-1",
+        "sku": "FAB-SNG-01",
+        "barcode": "890100101601",
+        "size": "Per Meter",
+        "color": "Floral Indigo",
+        "hex": "#003049",
+        "price": 220,
+        "mrp": 299
+      },
+      {
+        "id": "v-16-2",
+        "sku": "FAB-SNG-02",
+        "barcode": "890100101602",
+        "size": "Per Meter",
+        "color": "Bagru Black",
+        "hex": "#212529",
+        "price": 220,
+        "mrp": 299
+      },
+      {
+        "id": "v-16-3",
+        "sku": "FAB-SNG-03",
+        "barcode": "890100101603",
+        "size": "Per Meter",
+        "color": "Marigold Ochre",
+        "hex": "#fcbf49",
+        "price": 220,
+        "mrp": 299
+      }
+    ]
+  },
+  {
+    "id": "prod-17",
+    "name": "Girls Pattu Pavadai / Silk Lehenga Choli",
+    "category": "Kids Wear",
+    "fabric": "Pure Mulberry Silk",
+    "brand": "Pattu Pattu Kids",
+    "hsn": "6204",
+    "mrp": 3499,
+    "price": 2599,
+    "gstRate": 5,
+    "description": "Traditional South Indian temple border zari pavadai choli for festivals.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-17-1",
+        "sku": "PPK-GRN-24",
+        "barcode": "890100101701",
+        "size": "Age 3-4 (Size 24)",
+        "color": "Parrot Green & Pink",
+        "hex": "#52b788",
+        "price": 2599,
+        "mrp": 3499
+      },
+      {
+        "id": "v-17-2",
+        "sku": "PPK-GRN-28",
+        "barcode": "890100101702",
+        "size": "Age 6-7 (Size 28)",
+        "color": "Parrot Green & Pink",
+        "hex": "#52b788",
+        "price": 2799,
+        "mrp": 3699
+      },
+      {
+        "id": "v-17-3",
+        "sku": "PPK-YEL-24",
+        "barcode": "890100101703",
+        "size": "Age 3-4 (Size 24)",
+        "color": "Yellow & Royal Blue",
+        "hex": "#f4a261",
+        "price": 2599,
+        "mrp": 3499
+      }
+    ]
+  },
+  {
+    "id": "prod-18",
+    "name": "Boys Silk Dhoti and Shirt Festive Combo",
+    "category": "Kids Wear",
+    "fabric": "Pure Mulberry Silk",
+    "brand": "Junior Raja",
+    "hsn": "6203",
+    "mrp": 2499,
+    "price": 1899,
+    "gstRate": 5,
+    "description": "Full sleeve art silk shirt with matching velcro dhoti and angavastram.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-18-1",
+        "sku": "BDS-CRM-26",
+        "barcode": "890100101801",
+        "size": "Age 4-5 (Size 26)",
+        "color": "Cream & Maroon Border",
+        "hex": "#fff1e6",
+        "price": 1899,
+        "mrp": 2499
+      },
+      {
+        "id": "v-18-2",
+        "sku": "BDS-CRM-30",
+        "barcode": "890100101802",
+        "size": "Age 7-8 (Size 30)",
+        "color": "Cream & Maroon Border",
+        "hex": "#fff1e6",
+        "price": 2099,
+        "mrp": 2699
+      },
+      {
+        "id": "v-18-3",
+        "sku": "BDS-GLD-28",
+        "barcode": "890100101803",
+        "size": "Age 6-7 (Size 28)",
+        "color": "Gold & Green Border",
+        "hex": "#eddcd2",
+        "price": 1999,
+        "mrp": 2599
+      }
+    ]
+  },
+  {
+    "id": "prod-19",
+    "name": "Pure Cotton Jacquard Double Bedspread with Pillow Covers",
+    "category": "Home Textiles",
+    "fabric": "100% Combed Cotton",
+    "brand": "Karur Handlooms",
+    "hsn": "6302",
+    "mrp": 1899,
+    "price": 1399,
+    "gstRate": 12,
+    "description": "Heavy 400 GSM woven traditional jacquard floral bed cover (90x108 inch).",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-19-1",
+        "sku": "KBD-NVY-KG",
+        "barcode": "890100101901",
+        "size": "King (90x108\")",
+        "color": "Navy White Jacquard",
+        "hex": "#1d3557",
+        "price": 1399,
+        "mrp": 1899
+      },
+      {
+        "id": "v-19-2",
+        "sku": "KBD-MRN-KG",
+        "barcode": "890100101902",
+        "size": "King (90x108\")",
+        "color": "Maroon Gold Jacquard",
+        "hex": "#780000",
+        "price": 1399,
+        "mrp": 1899
+      }
+    ]
+  },
+  {
+    "id": "prod-20",
+    "name": "Erode 100% Cotton Bath Towel (Combo Pack of 2)",
+    "category": "Home Textiles",
+    "fabric": "100% Combed Cotton",
+    "brand": "Erode Tex",
+    "hsn": "6302",
+    "mrp": 899,
+    "price": 599,
+    "gstRate": 5,
+    "description": "High water absorbent waffle weave durable pure cotton large size towels.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-20-1",
+        "sku": "ETW-BLU-PK2",
+        "barcode": "890100102001",
+        "size": "30x60 Inches",
+        "color": "Blue & Teal Pack",
+        "hex": "#48cae4",
+        "price": 599,
+        "mrp": 899
+      },
+      {
+        "id": "v-20-2",
+        "sku": "ETW-WHT-PK2",
+        "barcode": "890100102002",
+        "size": "30x60 Inches",
+        "color": "White & Grey Pack",
+        "hex": "#e9ecef",
+        "price": 599,
+        "mrp": 899
+      }
+    ]
+  },
+  {
+    "id": "prod-21",
+    "name": "Arani Pure Zari Silk Saree",
+    "category": "Sarees",
+    "fabric": "Pure Mulberry Silk",
+    "brand": "Arani Weavers",
+    "hsn": "5007",
+    "mrp": 8999,
+    "price": 6999,
+    "gstRate": 5,
+    "description": "Traditional Arani handloom silk saree with gold tissue pallu.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-21-1",
+        "sku": "ARN-MGN-FS",
+        "barcode": "890100102101",
+        "size": "Free Size",
+        "color": "Magenta Gold",
+        "hex": "#c1121f",
+        "price": 6999,
+        "mrp": 8999
+      },
+      {
+        "id": "v-21-2",
+        "sku": "ARN-CYN-FS",
+        "barcode": "890100102102",
+        "size": "Free Size",
+        "color": "Cyan Turquoise",
+        "hex": "#0077b6",
+        "price": 6999,
+        "mrp": 8999
+      }
+    ]
+  },
+  {
+    "id": "prod-22",
+    "name": "Gadwal Pure Handloom Cotton Saree with Silk Border",
+    "category": "Sarees",
+    "fabric": "100% Combed Cotton",
+    "brand": "Gadwal Heritage",
+    "hsn": "5208",
+    "mrp": 6499,
+    "price": 4999,
+    "gstRate": 5,
+    "description": "Fine cotton body with woven pure silk kuttu border and rich pallu.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-22-1",
+        "sku": "GDW-ORG-FS",
+        "barcode": "890100102201",
+        "size": "Free Size",
+        "color": "Burnt Orange / Purple",
+        "hex": "#ca6702",
+        "price": 4999,
+        "mrp": 6499
+      },
+      {
+        "id": "v-22-2",
+        "sku": "GDW-YEL-FS",
+        "barcode": "890100102202",
+        "size": "Free Size",
+        "color": "Lemon Yellow / Pink",
+        "hex": "#e9d8a6",
+        "price": 4999,
+        "mrp": 6499
+      }
+    ]
+  },
+  {
+    "id": "prod-23",
+    "name": "Chiffon Bandhani Print Saree with Gota Patti",
+    "category": "Sarees",
+    "fabric": "Chiffon & Georgette",
+    "brand": "Jaipur Rang",
+    "hsn": "5407",
+    "mrp": 2999,
+    "price": 2199,
+    "gstRate": 5,
+    "description": "Light featherweight chiffon authentic tie-dye bandhej saree.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-23-1",
+        "sku": "BND-RED-FS",
+        "barcode": "890100102301",
+        "size": "Free Size",
+        "color": "Crimson Red",
+        "hex": "#e63946",
+        "price": 2199,
+        "mrp": 2999
+      },
+      {
+        "id": "v-23-2",
+        "sku": "BND-YLW-FS",
+        "barcode": "890100102302",
+        "size": "Free Size",
+        "color": "Sunflower Yellow",
+        "hex": "#ffb703",
+        "price": 2199,
+        "mrp": 2999
+      }
+    ]
+  },
+  {
+    "id": "prod-24",
+    "name": "Men's Nehru Sleeveless Modi Jacket",
+    "category": "Men's Ethnic",
+    "fabric": "Khadi Cotton",
+    "brand": "Swadeshi Handlooms",
+    "hsn": "6203",
+    "mrp": 2499,
+    "price": 1799,
+    "gstRate": 12,
+    "description": "Button-down bandhgala waistcoat in textured matka silk finish.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-24-1",
+        "sku": "NJ-BEI-38",
+        "barcode": "890100102401",
+        "size": "38 (M)",
+        "color": "Tussar Beige",
+        "hex": "#e3d5ca",
+        "price": 1799,
+        "mrp": 2499
+      },
+      {
+        "id": "v-24-2",
+        "sku": "NJ-BEI-40",
+        "barcode": "890100102402",
+        "size": "40 (L)",
+        "color": "Tussar Beige",
+        "hex": "#e3d5ca",
+        "price": 1799,
+        "mrp": 2499
+      },
+      {
+        "id": "v-24-3",
+        "sku": "NJ-NVY-40",
+        "barcode": "890100102403",
+        "size": "40 (L)",
+        "color": "Midnight Navy",
+        "hex": "#1b263b",
+        "price": 1799,
+        "mrp": 2499
+      }
+    ]
+  },
+  {
+    "id": "prod-25",
+    "name": "Cotton Casual Printed Half Sleeve Shirt",
+    "category": "Men's Casual",
+    "fabric": "100% Combed Cotton",
+    "brand": "Highlander Urban",
+    "hsn": "6205",
+    "mrp": 1499,
+    "price": 999,
+    "gstRate": 5,
+    "description": "Breathable tropical Hawaiian and geometric printed holiday shirt.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-25-1",
+        "sku": "CHS-NVY-M",
+        "barcode": "890100102501",
+        "size": "M (38)",
+        "color": "Navy Palm Print",
+        "hex": "#0f4c81",
+        "price": 999,
+        "mrp": 1499
+      },
+      {
+        "id": "v-25-2",
+        "sku": "CHS-NVY-L",
+        "barcode": "890100102502",
+        "size": "L (40)",
+        "color": "Navy Palm Print",
+        "hex": "#0f4c81",
+        "price": 999,
+        "mrp": 1499
+      },
+      {
+        "id": "v-25-3",
+        "sku": "CHS-WHT-L",
+        "barcode": "890100102503",
+        "size": "L (40)",
+        "color": "White Leaf Print",
+        "hex": "#f8f9fa",
+        "price": 999,
+        "mrp": 1499
+      }
+    ]
+  },
+  {
+    "id": "prod-26",
+    "name": "Women's Rayon Flared Embroidered Kurti",
+    "category": "Women's Kurtis",
+    "fabric": "Rayon",
+    "brand": "Aurelia Vibes",
+    "hsn": "6204",
+    "mrp": 1799,
+    "price": 1199,
+    "gstRate": 5,
+    "description": "Heavy 14kg rayon flared kurti with gold foil stamping and side tassels.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-26-1",
+        "sku": "RFK-EMR-M",
+        "barcode": "890100102601",
+        "size": "M (38)",
+        "color": "Emerald Green",
+        "hex": "#2d6a4f",
+        "price": 1199,
+        "mrp": 1799
+      },
+      {
+        "id": "v-26-2",
+        "sku": "RFK-EMR-L",
+        "barcode": "890100102602",
+        "size": "L (40)",
+        "color": "Emerald Green",
+        "hex": "#2d6a4f",
+        "price": 1199,
+        "mrp": 1799
+      },
+      {
+        "id": "v-26-3",
+        "sku": "RFK-MRN-M",
+        "barcode": "890100102603",
+        "size": "M (38)",
+        "color": "Wine Red",
+        "hex": "#590d22",
+        "price": 1199,
+        "mrp": 1799
+      }
+    ]
+  },
+  {
+    "id": "prod-27",
+    "name": "Palazzo Pants in Pure Cotton (Elasticated Waist)",
+    "category": "Women's Kurtis",
+    "fabric": "100% Combed Cotton",
+    "brand": "Go Colors Edition",
+    "hsn": "6204",
+    "mrp": 999,
+    "price": 649,
+    "gstRate": 5,
+    "description": "Wide flare comfortable daily wear ankle-length palazzo pants with pockets.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-27-1",
+        "sku": "PLZ-WHT-FS",
+        "barcode": "890100102701",
+        "size": "Free Size (28-36)",
+        "color": "Off White",
+        "hex": "#f8f9fa",
+        "price": 649,
+        "mrp": 999
+      },
+      {
+        "id": "v-27-2",
+        "sku": "PLZ-BLK-FS",
+        "barcode": "890100102702",
+        "size": "Free Size (28-36)",
+        "color": "Solid Jet Black",
+        "hex": "#000000",
+        "price": 649,
+        "mrp": 999
+      },
+      {
+        "id": "v-27-3",
+        "sku": "PLZ-BEI-FS",
+        "barcode": "890100102703",
+        "size": "Free Size (28-36)",
+        "color": "Warm Beige",
+        "hex": "#d5bdaf",
+        "price": 649,
+        "mrp": 999
+      }
+    ]
+  },
+  {
+    "id": "prod-28",
+    "name": "Banarasi Brocade Silk Blouse Piece (1 Meter)",
+    "category": "Fabrics & Matching",
+    "fabric": "Banarasi Silk",
+    "brand": "Varanasi Weaves",
+    "hsn": "5007",
+    "mrp": 699,
+    "price": 499,
+    "gstRate": 5,
+    "description": "Heavy gold zari woven matching blouse cut piece for silk sarees.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-28-1",
+        "sku": "BBL-GLD-1M",
+        "barcode": "890100102801",
+        "size": "1.0 Meter",
+        "color": "Royal Gold",
+        "hex": "#d4af37",
+        "price": 499,
+        "mrp": 699
+      },
+      {
+        "id": "v-28-2",
+        "sku": "BBL-RED-1M",
+        "barcode": "890100102802",
+        "size": "1.0 Meter",
+        "color": "Blood Red Zari",
+        "hex": "#9e2a2b",
+        "price": 499,
+        "mrp": 699
+      },
+      {
+        "id": "v-28-3",
+        "sku": "BBL-GRN-1M",
+        "barcode": "890100102803",
+        "size": "1.0 Meter",
+        "color": "Peacock Green",
+        "hex": "#005f73",
+        "price": 499,
+        "mrp": 699
+      }
+    ]
+  },
+  {
+    "id": "prod-29",
+    "name": "Phulkari Embroidered Chiffon Dupatta",
+    "category": "Fabrics & Matching",
+    "fabric": "Chiffon & Georgette",
+    "brand": "Amritsar Crafts",
+    "hsn": "6214",
+    "mrp": 1299,
+    "price": 899,
+    "gstRate": 5,
+    "description": "Vibrant geometric silk thread phulkari embroidery with mirror borders.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-29-1",
+        "sku": "PHL-MLT-FS",
+        "barcode": "890100102901",
+        "size": "2.4 Meters",
+        "color": "Multicolour Yellow",
+        "hex": "#f77f00",
+        "price": 899,
+        "mrp": 1299
+      },
+      {
+        "id": "v-29-2",
+        "sku": "PHL-RED-FS",
+        "barcode": "890100102902",
+        "size": "2.4 Meters",
+        "color": "Multicolour Red",
+        "hex": "#d62828",
+        "price": 899,
+        "mrp": 1299
+      }
+    ]
+  },
+  {
+    "id": "prod-30",
+    "name": "Girls Festive Net Frock with Sequin Bow",
+    "category": "Kids Wear",
+    "fabric": "Velvet",
+    "brand": "Little Princess",
+    "hsn": "6204",
+    "mrp": 1999,
+    "price": 1399,
+    "gstRate": 12,
+    "description": "Fluffy multilayer party frock with soft satin lining and glitz bodice.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-30-1",
+        "sku": "GNF-PNK-24",
+        "barcode": "890100103001",
+        "size": "Age 3-4 (Size 24)",
+        "color": "Candy Pink",
+        "hex": "#ff758f",
+        "price": 1399,
+        "mrp": 1999
+      },
+      {
+        "id": "v-30-2",
+        "sku": "GNF-PNK-28",
+        "barcode": "890100103002",
+        "size": "Age 6-7 (Size 28)",
+        "color": "Candy Pink",
+        "hex": "#ff758f",
+        "price": 1549,
+        "mrp": 2199
+      },
+      {
+        "id": "v-30-3",
+        "sku": "GNF-SKY-26",
+        "barcode": "890100103003",
+        "size": "Age 4-5 (Size 26)",
+        "color": "Sky Cinderella Blue",
+        "hex": "#a2d2ff",
+        "price": 1449,
+        "mrp": 2099
+      }
+    ]
+  },
+  {
+    "id": "prod-31",
+    "name": "Boys Casual Cotton Polo T-Shirt",
+    "category": "Kids Wear",
+    "fabric": "100% Combed Cotton",
+    "brand": "Junior Club",
+    "hsn": "6109",
+    "mrp": 799,
+    "price": 499,
+    "gstRate": 5,
+    "description": "100% bio-wash pique cotton comfortable everyday collared t-shirt.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-31-1",
+        "sku": "BPT-RED-26",
+        "barcode": "890100103101",
+        "size": "Size 26 (Age 4-5)",
+        "color": "Chili Red",
+        "hex": "#d90429",
+        "price": 499,
+        "mrp": 799
+      },
+      {
+        "id": "v-31-2",
+        "sku": "BPT-NVY-28",
+        "barcode": "890100103102",
+        "size": "Size 28 (Age 6-7)",
+        "color": "Navy Stripe",
+        "hex": "#001845",
+        "price": 499,
+        "mrp": 799
+      },
+      {
+        "id": "v-31-3",
+        "sku": "BPT-YEL-30",
+        "barcode": "890100103103",
+        "size": "Size 30 (Age 8-9)",
+        "color": "Bright Yellow",
+        "hex": "#ffd166",
+        "price": 549,
+        "mrp": 849
+      }
+    ]
+  },
+  {
+    "id": "prod-32",
+    "name": "Madurai Sungudi Pure Cotton Saree",
+    "category": "Sarees",
+    "fabric": "100% Combed Cotton",
+    "brand": "Madurai Handlooms",
+    "hsn": "5208",
+    "mrp": 1499,
+    "price": 1150,
+    "gstRate": 5,
+    "description": "Heritage tie-dye circular dots sungudi saree with contrast zari border.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-32-1",
+        "sku": "MSG-RED-FS",
+        "barcode": "890100103201",
+        "size": "Free Size",
+        "color": "Traditional Red",
+        "hex": "#b7094c",
+        "price": 1150,
+        "mrp": 1499
+      },
+      {
+        "id": "v-32-2",
+        "sku": "MSG-GRN-FS",
+        "barcode": "890100103202",
+        "size": "Free Size",
+        "color": "Forest Green",
+        "hex": "#1b4332",
+        "price": 1150,
+        "mrp": 1499
+      }
+    ]
+  },
+  {
+    "id": "prod-33",
+    "name": "Kalamkari Hand Painted Cotton Dupatta",
+    "category": "Fabrics & Matching",
+    "fabric": "100% Combed Cotton",
+    "brand": "Andhra Artisans",
+    "hsn": "5208",
+    "mrp": 999,
+    "price": 699,
+    "gstRate": 5,
+    "description": "Natural vegetable dye painted mythological and peacock motifs dupatta.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-33-1",
+        "sku": "KLM-DPT-01",
+        "barcode": "890100103301",
+        "size": "2.5 Meters",
+        "color": "Earthy Ochre & Black",
+        "hex": "#936639",
+        "price": 699,
+        "mrp": 999
+      },
+      {
+        "id": "v-33-2",
+        "sku": "KLM-DPT-02",
+        "barcode": "890100103302",
+        "size": "2.5 Meters",
+        "color": "Indigo & Madder Red",
+        "hex": "#582f0e",
+        "price": 699,
+        "mrp": 999
+      }
+    ]
+  },
+  {
+    "id": "prod-34",
+    "name": "Pure Cotton Printed Kitchen Apron Set",
+    "category": "Home Textiles",
+    "fabric": "100% Combed Cotton",
+    "brand": "Karur Handlooms",
+    "hsn": "6302",
+    "mrp": 599,
+    "price": 399,
+    "gstRate": 12,
+    "description": "Heavy duty chef apron with adjustable neck strap, front pocket and mittens.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-34-1",
+        "sku": "KAP-CHK-RED",
+        "barcode": "890100103401",
+        "size": "Universal",
+        "color": "Red Gingham Checks",
+        "hex": "#9b2226",
+        "price": 399,
+        "mrp": 599
+      },
+      {
+        "id": "v-34-2",
+        "sku": "KAP-CHK-BLK",
+        "barcode": "890100103402",
+        "size": "Universal",
+        "color": "Black Gingham Checks",
+        "hex": "#212529",
+        "price": 399,
+        "mrp": 599
+      }
+    ]
+  },
+  {
+    "id": "prod-35",
+    "name": "Men's Formal Flat Front Cotton Trousers",
+    "category": "Men's Casual",
+    "fabric": "100% Combed Cotton",
+    "brand": "Vanguard Tailors",
+    "hsn": "6203",
+    "mrp": 2299,
+    "price": 1699,
+    "gstRate": 5,
+    "description": "Premium stretch cotton wrinkle-free smart office trousers.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-35-1",
+        "sku": "MTR-BLK-32",
+        "barcode": "890100103501",
+        "size": "32 Waist",
+        "color": "Charcoal Black",
+        "hex": "#222222",
+        "price": 1699,
+        "mrp": 2299
+      },
+      {
+        "id": "v-35-2",
+        "sku": "MTR-BLK-34",
+        "barcode": "890100103502",
+        "size": "34 Waist",
+        "color": "Charcoal Black",
+        "hex": "#222222",
+        "price": 1699,
+        "mrp": 2299
+      },
+      {
+        "id": "v-35-3",
+        "sku": "MTR-KHK-32",
+        "barcode": "890100103503",
+        "size": "32 Waist",
+        "color": "Classic Khaki",
+        "hex": "#c2b280",
+        "price": 1699,
+        "mrp": 2299
+      },
+      {
+        "id": "v-35-4",
+        "sku": "MTR-KHK-34",
+        "barcode": "890100103504",
+        "size": "34 Waist",
+        "color": "Classic Khaki",
+        "hex": "#c2b280",
+        "price": 1699,
+        "mrp": 2299
+      }
+    ]
+  },
+  {
+    "id": "prod-36",
+    "name": "Organza Floral Print Saree with Scallop Border",
+    "category": "Sarees",
+    "fabric": "Chiffon & Georgette",
+    "brand": "Vogue Drape",
+    "hsn": "5407",
+    "mrp": 3899,
+    "price": 2799,
+    "gstRate": 5,
+    "description": "Trendy sheer organza pastel saree with cutwork embroidered scalloped edges.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-36-1",
+        "sku": "ORG-LAV-FS",
+        "barcode": "890100103601",
+        "size": "Free Size",
+        "color": "Pastel Lilac",
+        "hex": "#dec0f1",
+        "price": 2799,
+        "mrp": 3899
+      },
+      {
+        "id": "v-36-2",
+        "sku": "ORG-PCH-FS",
+        "barcode": "890100103602",
+        "size": "Free Size",
+        "color": "Pastel Peach",
+        "hex": "#ffcad4",
+        "price": 2799,
+        "mrp": 3899
+      }
+    ]
+  },
+  {
+    "id": "prod-37",
+    "name": "Chanderi Silk Festive Stole / Scarf",
+    "category": "Fabrics & Matching",
+    "fabric": "Chanderi Silk",
+    "brand": "Kala Sanskruti",
+    "hsn": "6214",
+    "mrp": 899,
+    "price": 549,
+    "gstRate": 5,
+    "description": "Gold tipped hand-spun chanderi stole for formal and party dresses.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-37-1",
+        "sku": "STL-GLD-FS",
+        "barcode": "890100103701",
+        "size": "2.0m x 0.6m",
+        "color": "Champagne Gold",
+        "hex": "#fad4c0",
+        "price": 549,
+        "mrp": 899
+      },
+      {
+        "id": "v-37-2",
+        "sku": "STL-SIL-FS",
+        "barcode": "890100103702",
+        "size": "2.0m x 0.6m",
+        "color": "Silver Grey",
+        "hex": "#e0e1dd",
+        "price": 549,
+        "mrp": 899
+      }
+    ]
+  },
+  {
+    "id": "prod-38",
+    "name": "Cotton Handloom Door Curtain (Pack of 2)",
+    "category": "Home Textiles",
+    "fabric": "100% Combed Cotton",
+    "brand": "Karur Handlooms",
+    "hsn": "6303",
+    "mrp": 1499,
+    "price": 999,
+    "gstRate": 12,
+    "description": "7-foot eyelet cotton slub yarn blackout decorative door curtains.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-38-1",
+        "sku": "CUR-BRN-7FT",
+        "barcode": "890100103801",
+        "size": "4 x 7 Feet (Pair)",
+        "color": "Coffee Brown",
+        "hex": "#4a3525",
+        "price": 999,
+        "mrp": 1499
+      },
+      {
+        "id": "v-38-2",
+        "sku": "CUR-TEAL-7FT",
+        "barcode": "890100103802",
+        "size": "4 x 7 Feet (Pair)",
+        "color": "Teal Blue",
+        "hex": "#006d77",
+        "price": 999,
+        "mrp": 1499
+      }
+    ]
+  },
+  {
+    "id": "prod-39",
+    "name": "Men's Cotton Dhoti Kurta Wedding Combo",
+    "category": "Men's Ethnic",
+    "fabric": "100% Combed Cotton",
+    "brand": "Ramraj Heritage",
+    "hsn": "6203",
+    "mrp": 3599,
+    "price": 2799,
+    "gstRate": 5,
+    "description": "Gold zari border matching full sleeve cotton kurta and double dhoti set.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-39-1",
+        "sku": "MDK-CRM-40",
+        "barcode": "890100103901",
+        "size": "Size 40 (L)",
+        "color": "Ivory Gold Zari",
+        "hex": "#fefae0",
+        "price": 2799,
+        "mrp": 3599
+      },
+      {
+        "id": "v-39-2",
+        "sku": "MDK-CRM-42",
+        "barcode": "890100103902",
+        "size": "Size 42 (XL)",
+        "color": "Ivory Gold Zari",
+        "hex": "#fefae0",
+        "price": 2799,
+        "mrp": 3599
+      }
+    ]
+  },
+  {
+    "id": "prod-40",
+    "name": "Linen Casual Drawstring Pants for Men",
+    "category": "Men's Casual",
+    "fabric": "Linen",
+    "brand": "Linen Club Edition",
+    "hsn": "6203",
+    "mrp": 2499,
+    "price": 1899,
+    "gstRate": 5,
+    "description": "Relaxed fit pure linen lounge and resort wear trousers with drawstring waist.",
+    "status": "active",
+    "variants": [
+      {
+        "id": "v-40-1",
+        "sku": "LCP-NAT-32",
+        "barcode": "890100104001",
+        "size": "32 (M)",
+        "color": "Natural Linen Beige",
+        "hex": "#d6ccc2",
+        "price": 1899,
+        "mrp": 2499
+      },
+      {
+        "id": "v-40-2",
+        "sku": "LCP-NAT-34",
+        "barcode": "890100104002",
+        "size": "34 (L)",
+        "color": "Natural Linen Beige",
+        "hex": "#d6ccc2",
+        "price": 1899,
+        "mrp": 2499
+      },
+      {
+        "id": "v-40-3",
+        "sku": "LCP-WHT-32",
+        "barcode": "890100104003",
+        "size": "32 (M)",
+        "color": "Crisp White",
+        "hex": "#ffffff",
+        "price": 1899,
+        "mrp": 2499
+      },
+      {
+        "id": "v-40-4",
+        "sku": "LCP-WHT-34",
+        "barcode": "890100104004",
+        "size": "34 (L)",
+        "color": "Crisp White",
+        "hex": "#ffffff",
+        "price": 1899,
+        "mrp": 2499
+      }
+    ]
+  }
+]

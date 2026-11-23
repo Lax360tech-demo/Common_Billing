@@ -1,8 +1,36 @@
+# Node / Frontend
+node_modules/
+dist/
+release/
+Extracted_LAX360_v1.0.1_App/
+win-unpacked/
+*.log
+npm-debug.log*
+
+# Python / Backend
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables & Secrets
 .env
 .env.*
 !.env.example
 backend/.env
 backend/.env.*
 !backend/.env.example
-__pycache__/
-*.py[cod]
+
+# IDE & OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

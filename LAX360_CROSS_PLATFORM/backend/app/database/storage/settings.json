@@ -1,0 +1,41 @@
+[
+  {
+    "_id": "6afe8823f89f056877145cb9",
+    "id": "6afe8823f89f056877145cb9",
+    "store_id": "6afe8821f89f056877145cb7",
+    "store": {
+      "storeName": "Lady Avenue Showroom",
+      "tagline": "Authentic Textile & Apparel Store",
+      "address": "124, Usman Road, T. Nagar",
+      "city": "Salem",
+      "state": "Tamil Nadu",
+      "stateCode": "33",
+      "pincode": "600017",
+      "phone": "9876543210",
+      "email": "admin@gmail.com",
+      "gstin": "33AABCS8899K1ZM",
+      "pan": ""
+    },
+    "billing": {
+      "invoicePrefix": "TEX-2026-",
+      "nextSequence": 1001,
+      "defaultGSTRate": 5.0,
+      "pricingMode": "inclusive",
+      "defaultPaperSize": "80mm",
+      "defaultPaymentMethod": "Cash",
+      "enableRounding": true,
+      "cashierName": "Admin Manager",
+      "enableAutoCoupons": true,
+      "autoCouponThreshold": 2000.0,
+      "autoCouponDiscount": 100.0,
+      "autoCouponMinPurchase": 1000.0,
+      "termsAndConditions": "1. Goods once sold can be exchanged within 7 days with original bill.\n2. Cut-length fabrics & pure silk sarees are non-returnable.\nThank you for shopping with us!"
+    },
+    "appearance": {
+      "theme": "default",
+      "mode": "light"
+    },
+    "created_at": "2026-11-19T05:52:09.286503+00:00",
+    "billing.nextSequence": 1002
+  }
+]

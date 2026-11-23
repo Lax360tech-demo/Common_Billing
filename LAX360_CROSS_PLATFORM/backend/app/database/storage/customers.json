@@ -1,0 +1,36 @@
+[
+  {
+    "_id": "cust-510a03c0",
+    "id": "cust-510a03c0",
+    "store_id": "6afe8821f89f056877145cb7",
+    "name": "Kavitha Raman",
+    "phone": "9841234567",
+    "email": "",
+    "city": "Salem",
+    "state": "Tamil Nadu",
+    "address": "",
+    "gstin": "",
+    "type": "Retail",
+    "totalPurchases": 25998.0,
+    "totalBills": 2,
+    "lastPurchaseDate": "2026-11-19T06:42:01.073973+00:00",
+    "created_at": "2026-11-19T06:05:26.501741+00:00"
+  },
+  {
+    "_id": "cust-c724b762",
+    "id": "cust-c724b762",
+    "store_id": "6afe8821f89f056877145cb7",
+    "name": "jai",
+    "phone": "7708802908",
+    "email": "",
+    "city": "Local",
+    "state": "Tamil Nadu",
+    "address": "",
+    "gstin": "",
+    "type": "Retail",
+    "totalPurchases": 0.0,
+    "totalBills": 0,
+    "lastPurchaseDate": null,
+    "created_at": "2026-11-19T08:01:15.573626+00:00"
+  }
+]
