@@ -16,13 +16,14 @@ import {
   LogOut,
   Zap,
   Sparkles,
+  ShieldCheck,
   X
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useApp } from '../../context/AppContext';
 
 export const Sidebar = ({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOpen }) => {
-  const { user, business, categoryConfig, logout } = useAuth();
+  const { user, business, categoryConfig, logout, isSuperAdmin } = useAuth();
   const { settings } = useApp();
   const navigate = useNavigate();
 
@@ -36,6 +37,9 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobile
     { name: 'Purchases', href: '/purchases', icon: ShoppingBag },
     { name: 'Expenses', href: '/expenses', icon: DollarSign },
     { name: 'Reports & Analytics', href: '/reports', icon: BarChart3 },
+    ...(isSuperAdmin
+      ? [{ name: 'Mail ID Audit Logs', href: '/audit-logs', icon: ShieldCheck, adminBadge: true }]
+      : []),
     { name: 'Settings', href: '/settings', icon: Settings },
   ];
 
@@ -117,7 +121,7 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobile
             to={item.href}
             onClick={() => setIsMobileOpen?.(false)}
             className={({ isActive }) =>
-              `group flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-bold transition-all ${
+              `group flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold transition-all ${
                 isActive
                   ? 'bg-white/15 text-white shadow-inner font-extrabold'
                   : 'hover:bg-white/10 hover:text-white text-slate-300 opacity-90 hover:opacity-100'
@@ -132,8 +136,15 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobile
                 : {}
             }
           >
-            <item.icon className="h-5 w-5 shrink-0" />
-            <span className={`truncate ${isCollapsed ? 'lg:hidden' : 'block'}`}>{item.name}</span>
+            <div className="flex items-center gap-3 min-w-0">
+              <item.icon className="h-5 w-5 shrink-0" />
+              <span className={`truncate ${isCollapsed ? 'lg:hidden' : 'block'}`}>{item.name}</span>
+            </div>
+            {item.adminBadge && !isCollapsed && (
+              <span className="hidden lg:inline-block px-1.5 py-0.5 text-[9px] font-black uppercase rounded bg-indigo-500/40 text-indigo-200 border border-indigo-400/30">
+                Admin
+              </span>
+            )}
           </NavLink>
         ))}
       </nav>
@@ -148,7 +159,7 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobile
             <div className="min-w-0 truncate">
               <p className="text-xs font-bold text-white truncate">{user?.name || 'Administrator'}</p>
               <p className="text-[10px] uppercase font-semibold text-amber-400/90 tracking-wider">
-                {user?.role || 'Admin'}
+                {isSuperAdmin ? 'Super Admin' : (user?.role || 'Admin')}
               </p>
             </div>
           </div>

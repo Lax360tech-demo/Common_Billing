@@ -58,9 +58,9 @@ def generate_invoice_pdf(invoice: dict) -> bytes:
     for item in invoice.get("items", []):
         c.drawString(55, y, item.get("name", "")[:35])
         c.drawString(260, y, f"{item.get('quantity')} {item.get('unit', 'pcs')}")
-        c.drawString(340, y, f"₹{item.get('unit_price', 0.0):.2f}")
-        c.drawString(410, y, f"{item.get('tax_rate', 0)}% (₹{item.get('tax_amount', 0.0):.2f})")
-        c.drawRightString(width - 55, y, f"₹{item.get('line_total', 0.0):.2f}")
+        c.drawString(340, y, f"Rs.{item.get('unit_price', 0.0):.2f}")
+        c.drawString(410, y, f"{item.get('tax_rate', 0)}% (Rs.{item.get('tax_amount', 0.0):.2f})")
+        c.drawRightString(width - 55, y, f"Rs.{item.get('line_total', 0.0):.2f}")
         y -= 18
         if y < 100:
             c.showPage()
@@ -72,19 +72,19 @@ def generate_invoice_pdf(invoice: dict) -> bytes:
     # Summary
     c.setFont("Helvetica", 10)
     c.drawRightString(width - 150, y, "Subtotal (Taxable):")
-    c.drawRightString(width - 55, y, f"₹{invoice.get('subtotal', 0.0):.2f}")
+    c.drawRightString(width - 55, y, f"Rs.{invoice.get('subtotal', 0.0):.2f}")
     y -= 15
     c.drawRightString(width - 150, y, "Total GST (CGST + SGST):")
-    c.drawRightString(width - 55, y, f"₹{invoice.get('tax_amount', 0.0):.2f}")
+    c.drawRightString(width - 55, y, f"Rs.{invoice.get('tax_amount', 0.0):.2f}")
     y -= 15
     if invoice.get("discount_amount", 0.0) > 0:
         c.drawRightString(width - 150, y, "Discount:")
-        c.drawRightString(width - 55, y, f"-₹{invoice.get('discount_amount', 0.0):.2f}")
+        c.drawRightString(width - 55, y, f"-Rs.{invoice.get('discount_amount', 0.0):.2f}")
         y -= 15
 
     c.setFont("Helvetica-Bold", 12)
     c.drawRightString(width - 150, y, "Grand Total:")
-    c.drawRightString(width - 55, y, f"₹{invoice.get('grand_total', 0.0):.2f}")
+    c.drawRightString(width - 55, y, f"Rs.{invoice.get('grand_total', 0.0):.2f}")
 
     # Footer
     c.setFont("Helvetica-Oblique", 8)

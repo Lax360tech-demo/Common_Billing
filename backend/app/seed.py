@@ -508,4 +508,372 @@ def seed_database():
     ]
     db.invoices.insert_many(demo_invoices)
 
+    # 7. Seed Diverse Business Billing Modules
+    extra_businesses = [
+        {
+            "id": "biz-textiles-002",
+            "name": "Royal Silks & Textiles",
+            "category": "textile_clothing",
+            "category_name": "Textiles, Apparels & Sarees",
+            "phone": "+91 94433 11223",
+            "email": "textiles@lax360.com",
+            "address": "88, Silk Weavers Colony, Korvai Nagar",
+            "city": "Coimbatore",
+            "state": "Tamil Nadu",
+            "pincode": "641001",
+            "gstin": "33AABCR1234F1Z8",
+            "currency": "₹",
+            "created_at": (now - timedelta(days=10)).isoformat()
+        },
+        {
+            "id": "biz-grocery-003",
+            "name": "GreenMart Supermarket",
+            "category": "supermarket",
+            "category_name": "Supermarket & Hypermarket",
+            "phone": "+91 98844 55667",
+            "email": "greenmart@lax360.com",
+            "address": "12, Outer Ring Road, Mahadevapura",
+            "city": "Bengaluru",
+            "state": "Karnataka",
+            "pincode": "560048",
+            "gstin": "29AABCG5678H1ZP",
+            "currency": "₹",
+            "created_at": (now - timedelta(days=20)).isoformat()
+        },
+        {
+            "id": "biz-pharmacy-004",
+            "name": "Apex Meds & Healthcare",
+            "category": "medical_pharmacy",
+            "category_name": "Pharmacy, Chemist & Healthcare",
+            "phone": "+91 91234 56789",
+            "email": "apexmeds@lax360.com",
+            "address": "5, Hospital Road, T Nagar",
+            "city": "Chennai",
+            "state": "Tamil Nadu",
+            "pincode": "600017",
+            "gstin": "33AABCA9012K1Z4",
+            "currency": "₹",
+            "created_at": (now - timedelta(days=30)).isoformat()
+        }
+    ]
+    db.businesses.insert_many(extra_businesses)
+
+    # Owner users for each business module
+    extra_users = [
+        {
+            "id": "user-textiles-002",
+            "business_id": "biz-textiles-002",
+            "name": "Karthik Weaves",
+            "email": "textiles@lax360.com",
+            "phone": "+91 94433 11223",
+            "hashed_password": get_password_hash("textiles123"),
+            "role": "admin",
+            "created_at": (now - timedelta(days=10)).isoformat()
+        },
+        {
+            "id": "user-grocery-003",
+            "business_id": "biz-grocery-003",
+            "name": "Suresh Mart Manager",
+            "email": "greenmart@lax360.com",
+            "phone": "+91 98844 55667",
+            "hashed_password": get_password_hash("greenmart123"),
+            "role": "admin",
+            "created_at": (now - timedelta(days=20)).isoformat()
+        },
+        {
+            "id": "user-pharmacy-004",
+            "business_id": "biz-pharmacy-004",
+            "name": "Dr. Ananya Rao",
+            "email": "apexmeds@lax360.com",
+            "phone": "+91 91234 56789",
+            "hashed_password": get_password_hash("apexmeds123"),
+            "role": "admin",
+            "created_at": (now - timedelta(days=30)).isoformat()
+        }
+    ]
+    db.users.insert_many(extra_users)
+
+    # Invoices for each business module
+    today_str = now.strftime("%Y-%m-%d")
+    multi_invoices = [
+        {
+            "id": "inv-textiles-101",
+            "business_id": "biz-textiles-002",
+            "invoice_number": "TXT-2026-0041",
+            "date": today_str,
+            "time": "11:20:00",
+            "cashier_name": "Karthik Weaves",
+            "business_info": {
+                "name": "Royal Silks & Textiles",
+                "category": "Textiles, Apparels & Sarees",
+                "address": "88, Silk Weavers Colony, Korvai Nagar, Coimbatore",
+                "phone": "+91 94433 11223",
+                "gstin": "33AABCR1234F1Z8",
+                "currency": "₹"
+            },
+            "customer": {
+                "name": "Meenakshi Sundaram",
+                "phone": "9840123456",
+                "address": "Coimbatore"
+            },
+            "items": [
+                {
+                    "product_id": "prod-txt-1",
+                    "name": "Kanchipuram Pure Silk Bridal Saree",
+                    "code": "SILK-KNC-01",
+                    "unit": "pcs",
+                    "quantity": 1.0,
+                    "unit_price": 14500.0,
+                    "discount_percent": 5.0,
+                    "discount_amount": 725.0,
+                    "tax_rate": 5.0,
+                    "taxable_amount": 13119.05,
+                    "tax_amount": 655.95,
+                    "cgst": 327.98,
+                    "sgst": 327.97,
+                    "igst": 0.0,
+                    "line_total": 13775.0
+                }
+            ],
+            "item_count": 1,
+            "total_quantity": 1.0,
+            "subtotal": 13119.05,
+            "tax_amount": 655.95,
+            "cgst": 327.98,
+            "sgst": 327.97,
+            "igst": 0.0,
+            "discount_amount": 725.0,
+            "round_off": 0.0,
+            "grand_total": 13775.0,
+            "paid_amount": 13775.0,
+            "balance_due": 0.0,
+            "payment_method": "Card",
+            "payment_status": "Paid",
+            "status": "completed",
+            "notes": "Bridal festive collection discount applied",
+            "created_at": (now - timedelta(hours=2)).isoformat()
+        },
+        {
+            "id": "inv-grocery-201",
+            "business_id": "biz-grocery-003",
+            "invoice_number": "GRM-2026-0812",
+            "date": today_str,
+            "time": "10:05:44",
+            "cashier_name": "Suresh Mart Manager",
+            "business_info": {
+                "name": "GreenMart Supermarket",
+                "category": "Supermarket & Hypermarket",
+                "address": "12, Outer Ring Road, Mahadevapura, Bengaluru",
+                "phone": "+91 98844 55667",
+                "gstin": "29AABCG5678H1ZP",
+                "currency": "₹"
+            },
+            "customer": {
+                "name": "Amitabh Sharma",
+                "phone": "9811223344",
+                "address": "Whitefield, Bengaluru"
+            },
+            "items": [
+                {
+                    "product_id": "prod-grm-1",
+                    "name": "Organic Basmati Rice 5kg Bag",
+                    "code": "GRM-RIC-05",
+                    "unit": "pack",
+                    "quantity": 2.0,
+                    "unit_price": 580.0,
+                    "discount_percent": 0.0,
+                    "discount_amount": 0.0,
+                    "tax_rate": 0.0,
+                    "taxable_amount": 1160.0,
+                    "tax_amount": 0.0,
+                    "cgst": 0.0,
+                    "sgst": 0.0,
+                    "igst": 0.0,
+                    "line_total": 1160.0
+                },
+                {
+                    "product_id": "prod-grm-2",
+                    "name": "Cold Pressed Groundnut Oil 1L",
+                    "code": "GRM-OIL-01",
+                    "unit": "bottle",
+                    "quantity": 3.0,
+                    "unit_price": 240.0,
+                    "discount_percent": 0.0,
+                    "discount_amount": 0.0,
+                    "tax_rate": 5.0,
+                    "taxable_amount": 685.71,
+                    "tax_amount": 34.29,
+                    "cgst": 17.15,
+                    "sgst": 17.14,
+                    "igst": 0.0,
+                    "line_total": 720.0
+                }
+            ],
+            "item_count": 2,
+            "total_quantity": 5.0,
+            "subtotal": 1845.71,
+            "tax_amount": 34.29,
+            "cgst": 17.15,
+            "sgst": 17.14,
+            "igst": 0.0,
+            "discount_amount": 0.0,
+            "round_off": 0.0,
+            "grand_total": 1880.0,
+            "paid_amount": 1880.0,
+            "balance_due": 0.0,
+            "payment_method": "UPI",
+            "payment_status": "Paid",
+            "status": "completed",
+            "notes": "Home delivery order",
+            "created_at": (now - timedelta(hours=3)).isoformat()
+        },
+        {
+            "id": "inv-pharmacy-301",
+            "business_id": "biz-pharmacy-004",
+            "invoice_number": "APX-2026-0309",
+            "date": today_str,
+            "time": "09:15:30",
+            "cashier_name": "Dr. Ananya Rao",
+            "business_info": {
+                "name": "Apex Meds & Healthcare",
+                "category": "Pharmacy, Chemist & Healthcare",
+                "address": "5, Hospital Road, T Nagar, Chennai",
+                "phone": "+91 91234 56789",
+                "gstin": "33AABCA9012K1Z4",
+                "currency": "₹"
+            },
+            "customer": {
+                "name": "Venkatesh Iyer",
+                "phone": "9444112233",
+                "address": "T Nagar, Chennai"
+            },
+            "items": [
+                {
+                    "product_id": "prod-med-1",
+                    "name": "Digital Blood Pressure Monitor",
+                    "code": "MED-BP-01",
+                    "unit": "pcs",
+                    "quantity": 1.0,
+                    "unit_price": 1850.0,
+                    "discount_percent": 0.0,
+                    "discount_amount": 0.0,
+                    "tax_rate": 12.0,
+                    "taxable_amount": 1651.79,
+                    "tax_amount": 198.21,
+                    "cgst": 99.11,
+                    "sgst": 99.10,
+                    "igst": 0.0,
+                    "line_total": 1850.0
+                }
+            ],
+            "item_count": 1,
+            "total_quantity": 1.0,
+            "subtotal": 1651.79,
+            "tax_amount": 198.21,
+            "cgst": 99.11,
+            "sgst": 99.10,
+            "igst": 0.0,
+            "discount_amount": 0.0,
+            "round_off": 0.0,
+            "grand_total": 1850.0,
+            "paid_amount": 1850.0,
+            "balance_due": 0.0,
+            "payment_method": "Cash",
+            "payment_status": "Paid",
+            "status": "completed",
+            "notes": "1 Year Replacement Warranty",
+            "created_at": (now - timedelta(hours=4)).isoformat()
+        }
+    ]
+    db.invoices.insert_many(multi_invoices)
+
+    # 8. Seed Initial Login & Logout Audit Logs across all mail IDs
+    demo_audit_logs = [
+        {
+            "id": "audit-log-01",
+            "email": "admin@gmail.com",
+            "name": "Lax360 Admin",
+            "role": "super_admin",
+            "business_id": business_id,
+            "business_name": "Lax360 Enterprise Store",
+            "business_category": "Retail Store",
+            "action": "LOGIN",
+            "status": "SUCCESS",
+            "ip_address": "192.168.1.10",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130.0",
+            "timestamp": (now - timedelta(minutes=45)).isoformat()
+        },
+        {
+            "id": "audit-log-02",
+            "email": "textiles@lax360.com",
+            "name": "Karthik Weaves",
+            "role": "admin",
+            "business_id": "biz-textiles-002",
+            "business_name": "Royal Silks & Textiles",
+            "business_category": "Textiles, Apparels & Sarees",
+            "action": "LOGIN",
+            "status": "SUCCESS",
+            "ip_address": "122.178.45.12",
+            "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Safari/605.1",
+            "timestamp": (now - timedelta(hours=2, minutes=10)).isoformat()
+        },
+        {
+            "id": "audit-log-03",
+            "email": "textiles@lax360.com",
+            "name": "Karthik Weaves",
+            "role": "admin",
+            "business_id": "biz-textiles-002",
+            "business_name": "Royal Silks & Textiles",
+            "business_category": "Textiles, Apparels & Sarees",
+            "action": "LOGOUT",
+            "status": "SUCCESS",
+            "ip_address": "122.178.45.12",
+            "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Safari/605.1",
+            "timestamp": (now - timedelta(hours=1, minutes=30)).isoformat()
+        },
+        {
+            "id": "audit-log-04",
+            "email": "greenmart@lax360.com",
+            "name": "Suresh Mart Manager",
+            "role": "admin",
+            "business_id": "biz-grocery-003",
+            "business_name": "GreenMart Supermarket",
+            "business_category": "Supermarket & Hypermarket",
+            "action": "LOGIN",
+            "status": "SUCCESS",
+            "ip_address": "49.207.180.95",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/130.0",
+            "timestamp": (now - timedelta(hours=3, minutes=15)).isoformat()
+        },
+        {
+            "id": "audit-log-05",
+            "email": "apexmeds@lax360.com",
+            "name": "Dr. Ananya Rao",
+            "role": "admin",
+            "business_id": "biz-pharmacy-004",
+            "business_name": "Apex Meds & Healthcare",
+            "business_category": "Pharmacy, Chemist & Healthcare",
+            "action": "LOGIN",
+            "status": "SUCCESS",
+            "ip_address": "106.210.12.88",
+            "user_agent": "Mozilla/5.0 (X11; Linux x86_64) Firefox/132.0",
+            "timestamp": (now - timedelta(hours=4, minutes=20)).isoformat()
+        },
+        {
+            "id": "audit-log-06",
+            "email": "staff_cashier@lax360.com",
+            "name": "Vikram Cashier",
+            "role": "cashier",
+            "business_id": business_id,
+            "business_name": "Lax360 Enterprise Store",
+            "business_category": "Retail Store",
+            "action": "LOGOUT",
+            "status": "SUCCESS",
+            "ip_address": "192.168.1.15",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130.0",
+            "timestamp": (now - timedelta(hours=1)).isoformat()
+        }
+    ]
+    db.auth_audit_logs.insert_many(demo_audit_logs)
+
     logger.info("Database seeding completed successfully.")

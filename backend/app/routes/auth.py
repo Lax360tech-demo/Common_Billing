@@ -1,13 +1,22 @@
 import uuid
 from datetime import datetime, timezone
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 from app.core.database import get_database
 from app.core.security import verify_password, get_password_hash, create_access_token, get_current_user
 from app.models.schemas import RegisterRequest, LoginRequest, ForgotPasswordRequest, ResetPasswordRequest
 from app.models.business_config import get_business_config
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
+
+def is_super_admin_user(user: dict) -> bool:
+    if not user:
+        return False
+    return (
+        user.get("is_super_admin") is True
+        or user.get("role") == "super_admin"
+        or user.get("email", "").lower().strip() == "admin@gmail.com"
+    )
 
 @router.post("/register")
 def register(payload: RegisterRequest):
@@ -110,15 +119,52 @@ def register(payload: RegisterRequest):
     }
 
 @router.post("/login")
-def login(payload: LoginRequest):
+def login(payload: LoginRequest, request: Request):
     db = get_database()
     identifier = payload.identifier.strip().lower()
+    ip_addr = request.client.host if request.client else "127.0.0.1"
+    ua = request.headers.get("user-agent", "Unknown Browser/App")
+    now_iso = datetime.now(timezone.utc).isoformat()
 
     user = db.users.find_one({"$or": [{"email": identifier}, {"phone": payload.identifier.strip()}]})
     if not user:
+        # Record failed login attempt
+        db.auth_audit_logs.insert_one({
+            "id": str(uuid.uuid4()),
+            "email": identifier,
+            "name": "Unknown",
+            "role": "unknown",
+            "business_id": "",
+            "business_name": "Unknown",
+            "business_category": "Unknown",
+            "action": "LOGIN_FAILED",
+            "status": "FAILED",
+            "reason": "Account not found",
+            "ip_address": ip_addr,
+            "user_agent": ua,
+            "timestamp": now_iso
+        })
         raise HTTPException(status_code=401, detail="Invalid email or password.")
 
     if not verify_password(payload.password, user.get("hashed_password", "")):
+        # Record failed password attempt
+        biz = db.businesses.find_one({"id": user.get("business_id", "")}) or {}
+        db.auth_audit_logs.insert_one({
+            "id": str(uuid.uuid4()),
+            "user_id": user.get("id"),
+            "email": user.get("email", identifier),
+            "name": user.get("name", "Unknown"),
+            "role": user.get("role", "staff"),
+            "business_id": user.get("business_id", ""),
+            "business_name": biz.get("name", "Unknown Business"),
+            "business_category": biz.get("category_name", biz.get("category", "General")),
+            "action": "LOGIN_FAILED",
+            "status": "FAILED",
+            "reason": "Incorrect password",
+            "ip_address": ip_addr,
+            "user_agent": ua,
+            "timestamp": now_iso
+        })
         raise HTTPException(status_code=401, detail="Invalid email or password.")
 
     business_id = user.get("business_id", "")
@@ -126,11 +172,39 @@ def login(payload: LoginRequest):
     category_id = business.get("category", "retail_store")
     category_config = get_business_config(category_id)
 
-    token = create_access_token({"sub": user["id"], "business_id": business_id, "role": user.get("role", "admin")})
+    is_super = is_super_admin_user(user)
+
+    token = create_access_token({
+        "sub": user["id"],
+        "business_id": business_id,
+        "role": "super_admin" if is_super else user.get("role", "admin"),
+        "is_super_admin": is_super
+    })
+
+    # Record successful login audit log
+    db.auth_audit_logs.insert_one({
+        "id": str(uuid.uuid4()),
+        "user_id": user.get("id"),
+        "email": user.get("email", identifier),
+        "name": user.get("name", ""),
+        "role": "super_admin" if is_super else user.get("role", "admin"),
+        "business_id": business_id,
+        "business_name": business.get("name", "Universal Store"),
+        "business_category": business.get("category_name", business.get("category", "General")),
+        "action": "LOGIN",
+        "status": "SUCCESS",
+        "ip_address": ip_addr,
+        "user_agent": ua,
+        "timestamp": now_iso
+    })
 
     user_clean = dict(user)
     user_clean.pop("_id", None)
     user_clean.pop("hashed_password", None)
+    user_clean["is_super_admin"] = is_super
+    if is_super:
+        user_clean["role"] = "super_admin"
+
     business_clean = dict(business)
     business_clean.pop("_id", None)
 
@@ -142,6 +216,34 @@ def login(payload: LoginRequest):
         "category_config": category_config
     }
 
+@router.post("/logout")
+def logout(request: Request, current_user: dict = Depends(get_current_user)):
+    db = get_database()
+    now_iso = datetime.now(timezone.utc).isoformat()
+    ip_addr = request.client.host if request.client else "127.0.0.1"
+    ua = request.headers.get("user-agent", "Unknown Browser/App")
+
+    biz = db.businesses.find_one({"id": current_user.get("business_id", "")}) or {}
+    is_super = is_super_admin_user(current_user)
+
+    db.auth_audit_logs.insert_one({
+        "id": str(uuid.uuid4()),
+        "user_id": current_user.get("id"),
+        "email": current_user.get("email"),
+        "name": current_user.get("name"),
+        "role": "super_admin" if is_super else current_user.get("role", "staff"),
+        "business_id": current_user.get("business_id"),
+        "business_name": biz.get("name", "Universal Store"),
+        "business_category": biz.get("category_name", biz.get("category", "General")),
+        "action": "LOGOUT",
+        "status": "SUCCESS",
+        "ip_address": ip_addr,
+        "user_agent": ua,
+        "timestamp": now_iso
+    })
+
+    return {"message": "Logged out successfully"}
+
 @router.get("/me")
 def get_me(current_user: dict = Depends(get_current_user)):
     db = get_database()
@@ -151,8 +253,14 @@ def get_me(current_user: dict = Depends(get_current_user)):
     settings = db.business_settings.find_one({"business_id": current_user["business_id"]}) or {}
     settings.pop("_id", None)
 
+    user_clean = dict(current_user)
+    is_super = is_super_admin_user(user_clean)
+    user_clean["is_super_admin"] = is_super
+    if is_super:
+        user_clean["role"] = "super_admin"
+
     return {
-        "user": current_user,
+        "user": user_clean,
         "business": business,
         "settings": settings,
         "category_config": category_config

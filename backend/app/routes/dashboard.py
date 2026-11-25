@@ -6,21 +6,40 @@ from app.core.security import get_current_user
 
 router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 
+def is_super_admin_user(user: dict) -> bool:
+    if not user:
+        return False
+    return (
+        user.get("is_super_admin") is True
+        or user.get("role") == "super_admin"
+        or user.get("email", "").lower().strip() == "admin@gmail.com"
+    )
+
 @router.get("/metrics")
 def get_dashboard_metrics(
     period: str = Query("today"), # today, yesterday, week, month, year, all, custom
+    business_id: Optional[str] = None,
     start_date: Optional[str] = None,
     end_date: Optional[str] = None,
     current_user: dict = Depends(get_current_user)
 ):
     db = get_database()
-    business_id = current_user["business_id"]
+    is_super = is_super_admin_user(current_user)
+    
+    target_business_id = None
+    if not is_super:
+        target_business_id = current_user["business_id"]
+    elif business_id and business_id != "all" and business_id != "All":
+        target_business_id = business_id
 
     now = datetime.now(timezone.utc)
     today_str = now.strftime("%Y-%m-%d")
 
     # Date boundary filter
-    query_invoices = {"business_id": business_id, "status": {"$ne": "cancelled"}}
+    query_invoices = {"status": {"$ne": "cancelled"}}
+    if target_business_id:
+        query_invoices["business_id"] = target_business_id
+
     if period == "today":
         query_invoices["date"] = today_str
     elif period == "yesterday":
@@ -39,7 +58,10 @@ def get_dashboard_metrics(
     invoices = list(db.invoices.find(query_invoices))
     
     # All time invoices
-    all_invoices = list(db.invoices.find({"business_id": business_id, "status": {"$ne": "cancelled"}}))
+    all_time_query = {"status": {"$ne": "cancelled"}}
+    if target_business_id:
+        all_time_query["business_id"] = target_business_id
+    all_invoices = list(db.invoices.find(all_time_query))
     total_sales_all_time = sum(float(inv.get("grand_total", 0.0)) for inv in all_invoices)
     
     period_sales = sum(float(inv.get("grand_total", 0.0)) for inv in invoices)
@@ -51,7 +73,8 @@ def get_dashboard_metrics(
     today_sales = sum(float(inv.get("grand_total", 0.0)) for inv in today_invoices)
 
     # Products & Low stock
-    all_products = list(db.products.find({"business_id": business_id}))
+    prod_query = {"business_id": target_business_id} if target_business_id else {}
+    all_products = list(db.products.find(prod_query))
     total_products = len(all_products)
     low_stock_products = [
         p for p in all_products 
@@ -60,11 +83,13 @@ def get_dashboard_metrics(
     low_stock_count = len(low_stock_products)
 
     # Customers & Suppliers
-    total_customers = db.customers.count_documents({"business_id": business_id})
-    total_suppliers = db.suppliers.count_documents({"business_id": business_id})
+    cust_query = {"business_id": target_business_id} if target_business_id else {}
+    supp_query = {"business_id": target_business_id} if target_business_id else {}
+    total_customers = db.customers.count_documents(cust_query)
+    total_suppliers = db.suppliers.count_documents(supp_query)
 
     # Pending Payments (Customer balances)
-    customers = list(db.customers.find({"business_id": business_id}))
+    customers = list(db.customers.find(cust_query))
     pending_payments = sum(float(c.get("outstanding_balance", 0.0)) for c in customers)
 
     # Payment Method Breakdown
@@ -128,9 +153,29 @@ def get_dashboard_metrics(
         tp["total"] = round(tp["total"], 2)
 
     # Recent Invoices
-    recent_invoices = list(db.invoices.find({"business_id": business_id}).sort("created_at", -1).limit(6))
+    rec_query = {"business_id": target_business_id} if target_business_id else {}
+    recent_invoices = list(db.invoices.find(rec_query).sort("created_at", -1).limit(6))
+    biz_map = {b["id"]: b for b in db.businesses.find({}, {"id": 1, "name": 1, "category": 1, "category_name": 1})}
     for r in recent_invoices:
         r.pop("_id", None)
+        b_info = biz_map.get(r.get("business_id"), {})
+        r["business_name"] = b_info.get("name", "Store")
+        r["business_category"] = b_info.get("category_name", b_info.get("category", "General"))
+
+    # Per-business breakdown if super admin in collective view
+    business_breakdown = []
+    if is_super and not target_business_id:
+        for b_id, b_info in biz_map.items():
+            b_invs = [inv for inv in all_invoices if inv.get("business_id") == b_id]
+            b_rev = sum(float(inv.get("grand_total", 0.0)) for inv in b_invs)
+            business_breakdown.append({
+                "id": b_id,
+                "name": b_info.get("name", "Store"),
+                "category": b_info.get("category", "General"),
+                "category_name": b_info.get("category_name", b_info.get("category", "General")),
+                "invoices_count": len(b_invs),
+                "revenue": round(b_rev, 2)
+            })
 
     return {
         "total_sales": round(total_sales_all_time, 2),
@@ -146,5 +191,8 @@ def get_dashboard_metrics(
         "sales_trend": sales_trend,
         "payment_breakdown": payment_breakdown,
         "top_selling_products": top_products,
-        "recent_invoices": recent_invoices
+        "recent_invoices": recent_invoices,
+        "is_super_admin": is_super,
+        "is_collective_view": is_super and not target_business_id,
+        "business_breakdown": business_breakdown
     }

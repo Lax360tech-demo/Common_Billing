@@ -45,21 +45,26 @@ export const Thermal80mmTemplate = ({ invoice, settings }) => {
           <span className="w-1/4 text-right">Amt</span>
         </div>
 
-        {(invoice.items || []).map((item, idx) => (
-          <div key={idx} className="py-1">
-            <div className="font-semibold text-[10px] truncate">{item.name}</div>
-            <div className="flex justify-between text-[9px] text-slate-700">
-              <span className="w-1/2 truncate">{item.quantity} {item.unit || 'pcs'}</span>
-              <span className="w-1/4 text-center">₹{item.unit_price}</span>
-              <span className="w-1/4 text-right font-bold">₹{item.line_total}</span>
-            </div>
-            {item.discount_amount > 0 && (
-              <div className="text-[9px] text-right text-slate-600">
-                Disc: -₹{item.discount_amount}
+        {(invoice.items || []).map((item, idx) => {
+          const taxRate = Number(item.tax_rate || 0);
+          const taxAmt = Number(item.tax_amount || 0);
+          return (
+            <div key={idx} className="py-1 border-b border-dotted border-slate-200 last:border-none">
+              <div className="font-semibold text-[10px] truncate">{item.name}</div>
+              <div className="flex justify-between text-[9px] text-slate-700">
+                <span className="w-1/2 truncate">{item.quantity} {item.unit || 'pcs'}</span>
+                <span className="w-1/4 text-center">₹{Number(item.unit_price || 0).toFixed(2)}</span>
+                <span className="w-1/4 text-right font-bold">₹{Number(item.line_total || 0).toFixed(2)}</span>
               </div>
-            )}
-          </div>
-        ))}
+              <div className="flex justify-between text-[8.5px] text-slate-600 mt-0.5">
+                <span>Tax: {taxRate}% (₹{taxAmt.toFixed(2)})</span>
+                {item.discount_amount > 0 && (
+                  <span>Disc: -₹{Number(item.discount_amount).toFixed(2)}</span>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Totals */}

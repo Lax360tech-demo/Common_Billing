@@ -19,6 +19,7 @@ import Purchases from './pages/Purchases';
 import Expenses from './pages/Expenses';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
+import AuditLogs from './pages/AuditLogs';
 
 export function App() {
   return (
@@ -52,6 +53,7 @@ export function App() {
                   <Route path="expenses" element={<Expenses />} />
                   <Route path="reports" element={<Reports />} />
                   <Route path="settings" element={<Settings />} />
+                  <Route path="audit-logs" element={<AuditLogs />} />
                 </Route>
 
                 {/* Catch-all route */}

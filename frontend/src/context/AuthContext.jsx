@@ -30,6 +30,25 @@ export const AuthProvider = ({ children }) => {
     }
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [allBusinesses, setAllBusinesses] = useState([]);
+  const [selectedBusinessId, setSelectedBusinessId] = useState('all');
+
+  const isSuperAdmin = Boolean(
+    user?.is_super_admin === true ||
+    user?.role === 'super_admin' ||
+    user?.email?.toLowerCase() === 'admin@gmail.com'
+  );
+
+  const loadBusinesses = useCallback(async () => {
+    try {
+      const res = await api.get('/admin/businesses');
+      if (res.data?.businesses) {
+        setAllBusinesses(res.data.businesses);
+      }
+    } catch (e) {
+      // Non-admin or offline
+    }
+  }, []);
 
   const fetchCurrentUser = useCallback(async () => {
     const token = localStorage.getItem('lax360_access_token');
@@ -46,13 +65,21 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('lax360_user', JSON.stringify(res.data.user));
       localStorage.setItem('lax360_business', JSON.stringify(res.data.business));
       localStorage.setItem('lax360_category_config', JSON.stringify(catCfg));
+
+      if (
+        res.data.user?.is_super_admin ||
+        res.data.user?.role === 'super_admin' ||
+        res.data.user?.email?.toLowerCase() === 'admin@gmail.com'
+      ) {
+        loadBusinesses();
+      }
     } catch (err) {
       console.warn('Session check note:', err);
       logout();
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [loadBusinesses]);
 
   useEffect(() => {
     fetchCurrentUser();
@@ -70,6 +97,15 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
     setBusiness(bizData);
     setCategoryConfig(finalCatCfg);
+
+    if (
+      userData?.is_super_admin ||
+      userData?.role === 'super_admin' ||
+      userData?.email?.toLowerCase() === 'admin@gmail.com'
+    ) {
+      loadBusinesses();
+    }
+
     return res.data;
   };
 
@@ -88,7 +124,12 @@ export const AuthProvider = ({ children }) => {
     return res.data;
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await api.post('/auth/logout');
+    } catch (e) {
+      // Ignore if session already invalid
+    }
     localStorage.removeItem('lax360_access_token');
     localStorage.removeItem('lax360_user');
     localStorage.removeItem('lax360_business');
@@ -113,6 +154,11 @@ export const AuthProvider = ({ children }) => {
         user,
         business,
         categoryConfig,
+        isSuperAdmin,
+        allBusinesses,
+        selectedBusinessId,
+        setSelectedBusinessId,
+        loadBusinesses,
         isAuthenticated: !!user,
         isLoading,
         login,

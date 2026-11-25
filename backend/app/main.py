@@ -9,6 +9,7 @@ from app.seed import seed_database
 # Routers
 from app.routes import (
     auth,
+    admin,
     business_categories,
     dashboard,
     products,
@@ -51,7 +52,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router, prefix="/api")
+app.include_router(admin.router, prefix="/api")
+app.include_router(business_categories.router, prefix="/api")
+app.include_router(dashboard.router, prefix="/api")
+app.include_router(products.router, prefix="/api")
+app.include_router(inventory.router, prefix="/api")
+app.include_router(invoices.router, prefix="/api")
+app.include_router(customers.router, prefix="/api")
+app.include_router(suppliers.router, prefix="/api")
+app.include_router(purchases.router, prefix="/api")
+app.include_router(expenses.router, prefix="/api")
+app.include_router(reports.router, prefix="/api")
+app.include_router(settings_router.router, prefix="/api")
+
+# Also include without prefix for backwards compatibility
 app.include_router(auth.router)
+app.include_router(admin.router)
 app.include_router(business_categories.router)
 app.include_router(dashboard.router)
 app.include_router(products.router)

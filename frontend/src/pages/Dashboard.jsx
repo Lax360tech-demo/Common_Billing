@@ -12,7 +12,10 @@ import {
   Eye,
   Calendar,
   Layers,
-  ArrowRight
+  ArrowRight,
+  ShieldCheck,
+  Store,
+  ExternalLink
 } from 'lucide-react';
 import {
   AreaChart,
@@ -38,11 +41,12 @@ import api from '../api/client';
 import { formatCurrency, formatDateTime } from '../utils/formatters';
 
 export const Dashboard = () => {
-  const { business, categoryConfig } = useAuth();
+  const { business, categoryConfig, isSuperAdmin, allBusinesses, selectedBusinessId, setSelectedBusinessId } = useAuth();
   const { settings } = useApp();
   const navigate = useNavigate();
 
   const [period, setPeriod] = useState('all');
+  const [dashboardBizFilter, setDashboardBizFilter] = useState(selectedBusinessId || 'all');
   const [metrics, setMetrics] = useState({
     total_sales: 0,
     period_sales: 0,
@@ -57,7 +61,8 @@ export const Dashboard = () => {
     sales_trend: [],
     payment_breakdown: [],
     top_selling_products: [],
-    recent_invoices: []
+    recent_invoices: [],
+    business_breakdown: []
   });
   const [loading, setLoading] = useState(true);
 
@@ -69,12 +74,13 @@ export const Dashboard = () => {
 
   useEffect(() => {
     loadMetrics();
-  }, [period]);
+  }, [period, dashboardBizFilter]);
 
   const loadMetrics = async () => {
     setLoading(true);
     try {
-      const res = await api.get(`/dashboard/metrics?period=${period}`);
+      const q = dashboardBizFilter && dashboardBizFilter !== 'all' ? `&business_id=${dashboardBizFilter}` : '';
+      const res = await api.get(`/dashboard/metrics?period=${period}${q}`);
       setMetrics(res.data);
     } catch (err) {
       console.warn('Dashboard metrics error:', err);
@@ -87,14 +93,71 @@ export const Dashboard = () => {
 
   return (
     <div className="space-y-6">
+      {/* Super Admin Control Banner */}
+      {isSuperAdmin && (
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white border border-indigo-900/50 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-indigo-600/30 border border-indigo-400/30 text-indigo-400">
+              <ShieldCheck className="h-6 w-6" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-black tracking-wide text-white uppercase">Application Admin Control Center</span>
+                <span className="px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase bg-indigo-500/30 text-indigo-300 border border-indigo-400/30">
+                  Full Access
+                </span>
+              </div>
+              <p className="text-xs text-slate-300 mt-0.5">
+                Consolidated view across all business billing modules, collective customer invoices & mail ID authentication logs.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2.5">
+            {/* Business Module Switcher */}
+            <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-xl border border-white/15">
+              <Building2 className="h-4 w-4 text-indigo-300" />
+              <select
+                value={dashboardBizFilter}
+                onChange={(e) => {
+                  setDashboardBizFilter(e.target.value);
+                  setSelectedBusinessId(e.target.value);
+                }}
+                className="bg-transparent text-xs font-bold text-white focus:outline-none cursor-pointer"
+              >
+                <option value="all" className="bg-slate-900 text-white">🌐 All Businesses (Collective View)</option>
+                {(allBusinesses || []).map((b) => (
+                  <option key={b.id} value={b.id} className="bg-slate-900 text-white">
+                    🏬 {b.name} ({b.category_name || b.category})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => navigate('/audit-logs')}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-md cursor-pointer"
+            >
+              <ShieldCheck className="h-4 w-4" />
+              <span>Mail ID Audit Logs</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Top Welcome & Period Filter Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
-            Business Dashboard
+            {isSuperAdmin && dashboardBizFilter === 'all'
+              ? 'Consolidated Platform Dashboard'
+              : 'Business Dashboard'}
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
-            Real-time analytics for <strong>{business?.name || 'Your Business'}</strong> ({categoryConfig?.name || 'Retail'})
+            {isSuperAdmin && dashboardBizFilter === 'all'
+              ? `Aggregate metrics across ${(allBusinesses || []).length} business billing modules and collective operations`
+              : `Real-time analytics for ${business?.name || 'Your Business'} (${categoryConfig?.name || 'Retail'})`}
           </p>
         </div>
 
@@ -191,6 +254,71 @@ export const Dashboard = () => {
           subtitle={`${metrics.total_customers} registered customers`}
         />
       </div>
+
+      {/* Cross-Business Breakdown Grid for Super Admin */}
+      {isSuperAdmin && dashboardBizFilter === 'all' && metrics.business_breakdown && metrics.business_breakdown.length > 0 && (
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                <Store className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                All Business Billing Modules Overview
+              </h2>
+              <p className="text-xs text-slate-400">
+                Performance and revenue statistics across all active enterprise tenant modules
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => navigate('/invoices')}
+              className="text-xs font-bold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 inline-flex items-center gap-1 cursor-pointer"
+            >
+              <span>View Collective Invoices</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {metrics.business_breakdown.map((biz) => (
+              <div
+                key={biz.business_id}
+                onClick={() => {
+                  setDashboardBizFilter(biz.business_id);
+                  setSelectedBusinessId(biz.business_id);
+                }}
+                className="group relative p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-500/50 hover:shadow-lg transition cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                      {biz.category_name || 'Retail'}
+                    </span>
+                    <span className="text-[11px] font-bold text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 inline-flex items-center gap-0.5">
+                      Drill down <ArrowRight className="h-3 w-3" />
+                    </span>
+                  </div>
+                  <h3 className="text-sm font-black text-slate-900 dark:text-white truncate">
+                    {biz.business_name}
+                  </h3>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] uppercase font-bold text-slate-400">Invoices</p>
+                    <p className="text-sm font-black text-slate-800 dark:text-slate-200">{biz.invoice_count}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] uppercase font-bold text-slate-400">Sales</p>
+                    <p className="text-sm font-black text-indigo-600 dark:text-indigo-400">
+                      {formatCurrency(biz.total_sales)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Low Stock Warning Banner if any */}
       {metrics.low_stock_count > 0 && (
@@ -321,8 +449,8 @@ export const Dashboard = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                {metrics.recent_invoices.map((inv) => (
-                  <tr key={inv.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/50">
+                {metrics.recent_invoices.map((inv, idx) => (
+                  <tr key={inv.id || inv._id || inv.invoice_number || idx} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/50">
                     <td className="py-2.5 px-3 font-mono font-bold text-indigo-600 dark:text-indigo-400">
                       {inv.invoice_number}
                     </td>

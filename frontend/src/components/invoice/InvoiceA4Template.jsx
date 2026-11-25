@@ -63,6 +63,7 @@ export const InvoiceA4Template = ({ invoice, settings }) => {
               <th className="py-2.5 px-3 text-right">Disc</th>
               <th className="py-2.5 px-3 text-right">Taxable</th>
               <th className="py-2.5 px-3 text-right">GST %</th>
+              <th className="py-2.5 px-3 text-right">Tax Amt</th>
               <th className="py-2.5 px-3 text-right">Total</th>
             </tr>
           </thead>
@@ -78,7 +79,8 @@ export const InvoiceA4Template = ({ invoice, settings }) => {
                   {item.discount_amount > 0 ? `-₹${item.discount_amount}` : '-'}
                 </td>
                 <td className="py-2.5 px-3 text-right">₹{Number(item.taxable_amount || item.line_total).toFixed(2)}</td>
-                <td className="py-2.5 px-3 text-right font-medium">{item.tax_rate || 0}%</td>
+                <td className="py-2.5 px-3 text-right font-medium">{Number(item.tax_rate || 0)}%</td>
+                <td className="py-2.5 px-3 text-right font-medium">₹{Number(item.tax_amount || 0).toFixed(2)}</td>
                 <td className="py-2.5 px-3 text-right font-bold text-slate-900">₹{Number(item.line_total).toFixed(2)}</td>
               </tr>
             ))}

@@ -8,10 +8,20 @@ from app.models.schemas import ProductCreateRequest, ProductUpdateRequest
 
 router = APIRouter(prefix="/products", tags=["Product & Inventory Management"])
 
+def is_super_admin_user(user: dict) -> bool:
+    if not user:
+        return False
+    return (
+        user.get("is_super_admin") is True
+        or user.get("role") == "super_admin"
+        or user.get("email", "").lower().strip() == "admin@gmail.com"
+    )
+
 @router.get("")
 def list_products(
     search: Optional[str] = None,
     category: Optional[str] = None,
+    business_id: Optional[str] = None,
     low_stock: Optional[bool] = None,
     sort_by: Optional[str] = Query("category", description="Field to sort by (category, name, created_at, etc.)"),
     sort_order: int = Query(1, description="1 for ascending, -1 for descending"),
@@ -20,8 +30,13 @@ def list_products(
     current_user: dict = Depends(get_current_user)
 ):
     db = get_database()
-    business_id = current_user["business_id"]
-    query = {"business_id": business_id}
+    is_super = is_super_admin_user(current_user)
+    query = {}
+
+    if not is_super:
+        query["business_id"] = current_user["business_id"]
+    elif business_id and business_id != "all" and business_id != "All":
+        query["business_id"] = business_id
 
     if search:
         search_regex = {"$regex": search.strip(), "$options": "i"}
@@ -53,8 +68,10 @@ def list_products(
     cursor = db.products.find(query).sort(sort_fields).skip(skip).limit(limit)
 
     items = list(cursor)
+    biz_map = {b["id"]: b.get("name", "Store") for b in db.businesses.find({}, {"id": 1, "name": 1})}
     for p in items:
         p.pop("_id", None)
+        p["business_name"] = biz_map.get(p.get("business_id"), "Store")
 
     if low_stock:
         items = [p for p in items if float(p.get("stock", 0.0)) <= float(p.get("min_stock_level", 5.0))]
@@ -62,10 +79,16 @@ def list_products(
     return {"items": items, "total": total, "page": page, "limit": limit}
 
 @router.get("/categories")
-def get_categories(current_user: dict = Depends(get_current_user)):
+def get_categories(business_id: Optional[str] = None, current_user: dict = Depends(get_current_user)):
     db = get_database()
-    business_id = current_user["business_id"]
-    categories = db.products.distinct("category", {"business_id": business_id})
+    is_super = is_super_admin_user(current_user)
+    cat_query = {}
+    if not is_super:
+        cat_query["business_id"] = current_user["business_id"]
+    elif business_id and business_id != "all" and business_id != "All":
+        cat_query["business_id"] = business_id
+
+    categories = db.products.distinct("category", cat_query)
     cleaned = [c.strip() for c in categories if c and isinstance(c, str) and c.strip()]
     return sorted(list(set(cleaned)), key=lambda s: s.lower())
 

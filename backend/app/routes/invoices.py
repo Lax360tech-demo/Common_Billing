@@ -8,11 +8,22 @@ from app.models.schemas import InvoiceCreateRequest
 
 router = APIRouter(prefix="/invoices", tags=["Invoicing & POS Billing"])
 
+def is_super_admin_user(user: dict) -> bool:
+    if not user:
+        return False
+    return (
+        user.get("is_super_admin") is True
+        or user.get("role") == "super_admin"
+        or user.get("email", "").lower().strip() == "admin@gmail.com"
+    )
+
 @router.get("")
 def list_invoices(
     search: Optional[str] = None,
     status: Optional[str] = None,
     payment_method: Optional[str] = None,
+    business_id: Optional[str] = None,
+    all_businesses: Optional[bool] = None,
     start_date: Optional[str] = None,
     end_date: Optional[str] = None,
     page: int = Query(1, ge=1),
@@ -20,8 +31,16 @@ def list_invoices(
     current_user: dict = Depends(get_current_user)
 ):
     db = get_database()
-    business_id = current_user["business_id"]
-    query = {"business_id": business_id}
+    is_super = is_super_admin_user(current_user)
+    query = {}
+
+    if not is_super:
+        query["business_id"] = current_user["business_id"]
+    else:
+        # Super admin: can view all businesses collectively or filter to a specific one
+        if business_id and business_id != "all" and business_id != "All":
+            query["business_id"] = business_id
+        # Otherwise query has no business_id constraint => collective view of all business modules!
 
     if search:
         search_regex = {"$regex": search.strip(), "$options": "i"}
@@ -47,18 +66,42 @@ def list_invoices(
     cursor = db.invoices.find(query).sort("created_at", -1).skip(skip).limit(limit)
 
     items = list(cursor)
+    # Cache business names to enrich items
+    biz_map = {b["id"]: b for b in db.businesses.find({}, {"id": 1, "name": 1, "category": 1, "category_name": 1})}
     for it in items:
         it.pop("_id", None)
+        b_info = biz_map.get(it.get("business_id"), {})
+        it["business_name"] = b_info.get("name", "Store")
+        it["business_category"] = b_info.get("category_name", b_info.get("category", "General"))
 
-    return {"items": items, "total": total, "page": page, "limit": limit}
+    return {
+        "items": items,
+        "total": total,
+        "page": page,
+        "limit": limit,
+        "is_collective_view": is_super and (not business_id or business_id == "all")
+    }
 
 @router.get("/{invoice_id}")
 def get_invoice(invoice_id: str, current_user: dict = Depends(get_current_user)):
     db = get_database()
-    invoice = db.invoices.find_one({"business_id": current_user["business_id"], "$or": [{"id": invoice_id}, {"invoice_number": invoice_id}]})
+    is_super = is_super_admin_user(current_user)
+    
+    if is_super:
+        invoice = db.invoices.find_one({"$or": [{"id": invoice_id}, {"invoice_number": invoice_id}]})
+    else:
+        invoice = db.invoices.find_one({
+            "business_id": current_user["business_id"],
+            "$or": [{"id": invoice_id}, {"invoice_number": invoice_id}]
+        })
+        
     if not invoice:
         raise HTTPException(status_code=404, detail="Invoice not found")
+        
+    biz = db.businesses.find_one({"id": invoice.get("business_id", "")}) or {}
     invoice.pop("_id", None)
+    invoice["business_name"] = biz.get("name", "")
+    invoice["business_category"] = biz.get("category_name", biz.get("category", ""))
     return invoice
 
 @router.post("")
@@ -259,7 +302,11 @@ def create_invoice(payload: InvoiceCreateRequest, current_user: dict = Depends(g
 def download_invoice_pdf(invoice_id: str, current_user: dict = Depends(get_current_user)):
     from app.services.pdf_service import generate_invoice_pdf
     db = get_database()
-    invoice = db.invoices.find_one({"business_id": current_user["business_id"], "$or": [{"id": invoice_id}, {"invoice_number": invoice_id}]})
+    is_super = is_super_admin_user(current_user)
+    if is_super:
+        invoice = db.invoices.find_one({"$or": [{"id": invoice_id}, {"invoice_number": invoice_id}]})
+    else:
+        invoice = db.invoices.find_one({"business_id": current_user["business_id"], "$or": [{"id": invoice_id}, {"invoice_number": invoice_id}]})
     if not invoice:
         raise HTTPException(status_code=404, detail="Invoice not found")
     

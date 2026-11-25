@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Menu, Sun, Moon, Palette, Bell, Store, Check, Sparkles } from 'lucide-react';
+import { Menu, Sun, Moon, Palette, Bell, Store, Check, Sparkles, Building2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useApp } from '../../context/AppContext';
 
 export const Header = ({ onOpenMobileMenu }) => {
-  const { business, user, categoryConfig } = useAuth();
+  const { business, user, categoryConfig, isSuperAdmin, allBusinesses, selectedBusinessId, setSelectedBusinessId } = useAuth();
   const { activeTheme, themeId, changeTheme, mode, toggleMode, allThemes } = useTheme();
   const { settings } = useApp();
   const [isThemePickerOpen, setIsThemePickerOpen] = useState(false);
@@ -27,9 +27,16 @@ export const Header = ({ onOpenMobileMenu }) => {
             <Store className="h-4 w-4" />
           </div>
           <div>
-            <h2 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white leading-tight">
-              {business?.name || settings?.business?.name || 'Lax360 Enterprise Store'}
-            </h2>
+            <div className="flex items-center gap-2">
+              <h2 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white leading-tight">
+                {business?.name || settings?.business?.name || 'Lax360 Enterprise Store'}
+              </h2>
+              {isSuperAdmin && (
+                <span className="hidden md:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-black uppercase bg-indigo-600 text-white tracking-wider">
+                  Admin
+                </span>
+              )}
+            </div>
             <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-indigo-600 dark:text-indigo-400">
               <Sparkles className="h-3 w-3" />
               {business?.category_name || categoryConfig?.name || 'Universal Business'}
@@ -38,8 +45,27 @@ export const Header = ({ onOpenMobileMenu }) => {
         </div>
       </div>
 
-      {/* Right side: Themes, Dark Mode, Profile */}
+      {/* Center/Right side: Quick Switcher for Admin, Themes, Dark Mode, Profile */}
       <div className="flex items-center gap-2 sm:gap-3">
+        {/* Super Admin Quick Business Switcher */}
+        {isSuperAdmin && allBusinesses.length > 0 && (
+          <div className="hidden md:flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <Building2 className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
+            <select
+              value={selectedBusinessId}
+              onChange={(e) => setSelectedBusinessId(e.target.value)}
+              className="bg-transparent text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none cursor-pointer max-w-[160px] truncate"
+              title="Active Business Module Context"
+            >
+              <option value="all" className="bg-white dark:bg-slate-900">🌐 All Businesses</option>
+              {allBusinesses.map((b) => (
+                <option key={b.id} value={b.id} className="bg-white dark:bg-slate-900">
+                  {b.name} ({b.category_name || b.category})
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         {/* Theme Picker Popover */}
         <div className="relative">
           <button

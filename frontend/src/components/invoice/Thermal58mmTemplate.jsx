@@ -16,12 +16,21 @@ export const Thermal58mmTemplate = ({ invoice, settings }) => {
         <div>Date: {invoice.date} {invoice.time}</div>
       </div>
       <div className="py-1 border-b border-dashed border-black">
-        {(invoice.items || []).map((it, idx) => (
-          <div key={idx} className="flex justify-between py-0.5">
-            <span className="truncate w-2/3">{it.quantity}x {it.name}</span>
-            <span className="font-bold">₹{it.line_total}</span>
-          </div>
-        ))}
+        {(invoice.items || []).map((it, idx) => {
+          const taxRate = Number(it.tax_rate || 0);
+          const taxAmt = Number(it.tax_amount || 0);
+          return (
+            <div key={idx} className="py-0.5">
+              <div className="flex justify-between">
+                <span className="truncate w-2/3">{it.quantity}x {it.name}</span>
+                <span className="font-bold">₹{Number(it.line_total || 0).toFixed(2)}</span>
+              </div>
+              <div className="text-[7.5px] text-slate-700">
+                Tax: {taxRate}% (₹{taxAmt.toFixed(2)})
+              </div>
+            </div>
+          );
+        })}
       </div>
       <div className="py-1 space-y-0.5 font-bold">
         <div className="flex justify-between">
